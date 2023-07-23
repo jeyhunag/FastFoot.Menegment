@@ -1,9 +1,9 @@
-﻿@model List<Foods>
+﻿@model List<Restaurants>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center display-3 " style="color:#FF7636;">Foods</h1>
+<h1 class="text-center display-3 " style="color:#FF7636;">Restaurants</h1>
 <p class="float-end">
     <a class="ui inverted violet  button btn-lg " asp-action="Create"><i class="hand point right icon pe-5 fs-4"></i>Create New</a>
 </p>
@@ -13,7 +13,9 @@
             <th>Image</th>
             <th>Id</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
             <th>Edit| Delete | Details</th>
         </tr>
 
@@ -28,8 +30,9 @@
                 </td>
                 <td>@item.Id</td>
                 <td>@item.Name</td>
-                <td>@item.Description</td>
-                <td>@item.CategoriesId</td>
+                <td>@item.Address</td>
+                <td>@item.Latitude</td>
+                <td>@item.Longitude</td>
                 <td>
                     <a class="btn btn-info " asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-brush me-2"></i>Edit</a> |
                     <a class="btn btn-danger " asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash3 me-2"></i>Delete</a>

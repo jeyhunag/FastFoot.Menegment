@@ -1,4 +1,4 @@
-﻿@model Foods
+﻿@model Restaurants
 @{
     ViewData["Title"] = "Delete";
 }
@@ -47,8 +47,9 @@
                 <div class=" list-box">
                     <div class="my-3"> Id: <span>@Html.DisplayFor(model => model.Id)</span></div>
                     <div class="my-3"> Name: <span>@Html.DisplayFor(model => model.Name)</span></div>
-                    <div class="mb-3"> Description: <span>@Html.DisplayFor(model => model.Description)</span></div>
-                    <div class="mb-3"> Foods Category: <span>@Html.DisplayFor(model => model.CategoriesId)</span></div>
+                    <div class="mb-3"> Address: <span>@Html.DisplayFor(model => model.Address)</span></div>
+                    <div class="mb-3"> Latitude: <span>@Html.DisplayFor(model => model.Latitude)</span></div>
+                    <div class="mb-3"> Longitude: <span>@Html.DisplayFor(model => model.Longitude)</span></div>
                 </div>
 
                 <form class="card-footer p-0 text-center " asp-action="Delete">

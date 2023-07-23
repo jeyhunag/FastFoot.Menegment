@@ -53,9 +53,9 @@ namespace FastFoot.Web.UI.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-            var movie = await _db.cities.FindAsync(id);
+            var cities = await _db.cities.FindAsync(id);
 
-            return View(movie);
+            return View(cities);
         }
 
         // POST: CitiesController/Edit/5
@@ -96,9 +96,7 @@ namespace FastFoot.Web.UI.Controllers
                 }
                 _db.SaveChanges();
                 return RedirectToAction("index");
-         
 
-            return View(cities);
         }
     }
 }
