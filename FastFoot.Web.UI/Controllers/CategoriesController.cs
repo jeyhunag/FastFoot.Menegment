@@ -61,13 +61,13 @@ namespace FastFoot.Web.UI.Controllers
         public async Task<IActionResult> Edit(Categories categories)
         {
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 _db.Update(categories);
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
-            //}
+            }
             return View(categories);
         }
 
