@@ -21,7 +21,7 @@ namespace FastFoot.Web.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categories>>> GetCategories()
         {
-            return await _context.categories.Include(c => c.foods).ToListAsync();
+            return await _context.categories.Include(c => c.Foods).ToListAsync();
         }
 
         // GET: api/Categories/5

@@ -1,0 +1,37 @@
+﻿@model Courier
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    label, h1, hr {
+        color: #FF7636;
+    }
+</style>
+<h1 class="text-center display-3">Create Courier</h1>
+<hr />
+
+<div class="mx-auto d-block">
+    <form class="mx-auto" method="post" asp-action="Create">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group col">
+                <label asp-for="Name" class="control-label ">Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group col">
+                <label asp-for="CitiesId" class="control-label">Cities</label>
+                <select asp-for="CitiesId" class="form-control" asp-items="ViewBag.CitiesId"></select>
+            </div>
+        </div>
+        <div class="form-group mt-4 text-center">
+            <input type="submit" value="Create" class="btn btn-outline-success btn-lg" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a class="btn btn-outline-info btn-lg text-decoration-none  float-end" asp-action="Index">Back to List</a>
+</div>
+

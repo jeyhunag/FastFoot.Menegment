@@ -11,9 +11,11 @@ namespace FastFood.DAL.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public int RestaurantsId { get; set; }
+        public Restaurants Restaurants { get; set; }
         public int CategoriesId { get; set; }
-
         public Categories Categories { get; set; }
-        
+        public virtual ICollection<Orders>? Orders { get; set; }
+
     }
 }

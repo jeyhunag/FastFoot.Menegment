@@ -11,6 +11,10 @@ namespace FastFood.DAL.Data
         public string Name { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        
+
+        public virtual ICollection<Restaurants>? Restaurants { get; set; }
+        public virtual ICollection<Courier>? Couriers { get; set; }
+        public virtual ICollection<Orders>? Orders { get; set; }
+
     }
 }

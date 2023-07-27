@@ -34,7 +34,9 @@ namespace FastFoot.Web.UI
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.MapAreaControllerRoute("FoltAdminArea",
+            areaName: "FoltAdmin",
+            pattern: "Foltadmin/{controller=Home}/{action=index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
