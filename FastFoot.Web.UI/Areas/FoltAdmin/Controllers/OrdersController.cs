@@ -49,9 +49,10 @@ namespace FastFoot.Web.UI.Areas.Controllers
             //if (ModelState.IsValid)
             //{
 
-            await _db.orders.AddAsync(orders);
-            await _db.SaveChangesAsync();
+                await _db.orders.AddAsync(orders);
+                await _db.SaveChangesAsync();
 
+                int newOrderId = orders.Id;
             return RedirectToAction("Index");
             //}
             ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name", orders.CitiesId);
@@ -126,7 +127,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
         {
 
             var order = await _db.orders.FindAsync(Id);
-            if (orders != null)
+            if (order != null)
             {
                 orders.DeletedDate = DateTime.Now;
                 _db.orders.Remove(orders);

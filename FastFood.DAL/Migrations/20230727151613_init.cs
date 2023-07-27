@@ -136,10 +136,8 @@ namespace FastFood.DAL.Migrations
                 name: "orders",
                 columns: table => new
                 {
-                    RestaurantsId = table.Column<int>(type: "int", nullable: false),
-                    FoodsId = table.Column<int>(type: "int", nullable: false),
-                    CitiesId = table.Column<int>(type: "int", nullable: false),
-                    CourierId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -147,14 +145,17 @@ namespace FastFood.DAL.Migrations
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MenzilNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    RestaurantsId = table.Column<int>(type: "int", nullable: false),
+                    FoodsId = table.Column<int>(type: "int", nullable: false),
+                    CitiesId = table.Column<int>(type: "int", nullable: false),
+                    CourierId = table.Column<int>(type: "int", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orders", x => new { x.CourierId, x.CitiesId, x.FoodsId, x.RestaurantsId });
+                    table.PrimaryKey("PK_orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_orders_cities_CitiesId",
                         column: x => x.CitiesId,
@@ -196,6 +197,12 @@ namespace FastFood.DAL.Migrations
                 name: "IX_orders_CitiesId",
                 table: "orders",
                 column: "CitiesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orders_CourierId_CitiesId_FoodsId_RestaurantsId",
+                table: "orders",
+                columns: new[] { "CourierId", "CitiesId", "FoodsId", "RestaurantsId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_orders_FoodsId",

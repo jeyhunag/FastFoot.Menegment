@@ -30,7 +30,8 @@ namespace FastFood.DAL.DbModel
            .WithMany(x => x.Foods).HasForeignKey(x => x.CategoriesId);
 
             modelBuilder.Entity<Orders>()
-                           .HasKey(ub => new { ub.CourierId, ub.CitiesId, ub.FoodsId, ub.RestaurantsId });
+            .HasIndex(ub => new { ub.CourierId, ub.CitiesId, ub.FoodsId, ub.RestaurantsId })
+            .IsUnique();
 
             modelBuilder.Entity<Orders>()
                 .HasOne(ub => ub.Courier)

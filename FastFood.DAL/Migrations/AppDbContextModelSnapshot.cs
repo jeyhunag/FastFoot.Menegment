@@ -163,25 +163,25 @@ namespace FastFood.DAL.Migrations
 
             modelBuilder.Entity("FastFood.DAL.Data.Orders", b =>
                 {
-                    b.Property<int>("CourierId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CitiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FoodsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RestaurantsId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Bina")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CitiesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourierId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
@@ -190,7 +190,7 @@ namespace FastFood.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("FoodsId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("InsertDate")
@@ -208,6 +208,9 @@ namespace FastFood.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RestaurantsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -215,13 +218,16 @@ namespace FastFood.DAL.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("CourierId", "CitiesId", "FoodsId", "RestaurantsId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CitiesId");
 
                     b.HasIndex("FoodsId");
 
                     b.HasIndex("RestaurantsId");
+
+                    b.HasIndex("CourierId", "CitiesId", "FoodsId", "RestaurantsId")
+                        .IsUnique();
 
                     b.ToTable("orders");
                 });
