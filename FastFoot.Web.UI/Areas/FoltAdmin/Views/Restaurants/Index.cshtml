@@ -3,56 +3,129 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center display-3 " style="color:#FF7636;">Restaurants</h1>
-<p class="float-end">
-    <a class="ui inverted violet  button btn-lg " asp-action="Create"><i class="hand point right icon pe-5 fs-4"></i>Create New</a>
-</p>
-<table class="table table-hover ms-5">
-    <thead>
-        <tr class="table-primary" style="color:#FF7636;">
-            <th>Image</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>City</th>
-            <th>Street</th>
-            <th>Bina</th>
-            <th>Email</th>
-            <th>Number</th>
-            <th>MenzilNo</th>
-            <th>Citie</th>
-            <th>Edit| Delete | Details</th>
-        </tr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10" style="margin-left:17%;">
+            <div class="card mt-5">
+                <h1 class="mt-5 m-auto">Restaurants</h1>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                <a asp-action="Create" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add New Order</a>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
 
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+                    <div class="table-responsive">
+                        <table class="table align-middle table-nowrap table-check">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20px;" class="align-middle">
+                                        <div class="form-check font-size-16">
+                                            <input class="form-check-input" type="checkbox" id="checkAll">
+                                            <label class="form-check-label" for="checkAll"></label>
+                                        </div>
+                                    </th>
+                                    <th class="align-middle">Image</th>
+                                    <th class="align-middle">ID</th>
+                                    <th class="align-middle">Name</th>
+                                    <th class="align-middle">Latitude</th>
+                                    <th class="align-middle">Longitude</th>
+                                    <th class="align-middle">City</th>
+                                    <th class="align-middle">Street</th>
+                                    <th class="align-middle">Bina</th>
+                                    <th class="align-middle">Email</th>
+                                    <th class="align-middle">Number</th>
+                                    <th class="align-middle">Menzil No</th>
+                                    <th class="align-middle">Cities ID</th>
+                                    <th class="align-middle">Edit | Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-            <tr class="table-primary">
-                <td class="img-fluid">
-                    <img src="~/@item.Image" style="width:80px; height:50px; border-radius: 30%;">
-                </td>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Address</td>
-                <td>@item.Latitude</td>
-                <td>@item.Longitude</td>
-                <td>@item.City</td>
-                <td>@item.Street</td>
-                <td>@item.Bina</td>
-                <td>@item.Email</td>
-                <td>@item.Number</td>
-                <td>@item.MenzilNo</td>
-                <td>@item.CitiesId</td>
-                <td>
-                    <a class="btn btn-info " asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-brush me-2"></i>Edit</a> |
-                    <a class="btn btn-danger " asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash3 me-2"></i>Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-check font-size-16">
+                                                <input class="form-check-input" type="checkbox" id="orderidcheck01">
+                                                <label class="form-check-label" for="orderidcheck01"></label>
+                                            </div>
+                                        </td>
+                                        <td><img src="~/@item.Image" alt="" class="avatar-sm"></td>
+                                        <td>@item.Id</td>
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.Latitude
+                                        </td>
+                                        <td>
+                                            @item.Longitude
+                                        </td>
+                                        <td>
+                                            @item.City
+                                        </td>
+                                        <td>
+                                            @item.Street
+                                        </td>
+                                        <td>
+                                            @item.Bina
+                                        </td>
+                                        <td>
+                                            @item.Email
+                                        </td>
+                                           <td>
+                                            @item.Number
+                                        </td>
+                                           <td>
+                                            @item.MenzilNo
+                                        </td>
+                                        <td>
+                                            @item.CitiesId
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-3">
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul class="pagination pagination-rounded justify-content-end mb-2">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+                                <i class="mdi mdi-chevron-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="javascript: void(0);" aria-label="Next">
+                                <i class="mdi mdi-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
 

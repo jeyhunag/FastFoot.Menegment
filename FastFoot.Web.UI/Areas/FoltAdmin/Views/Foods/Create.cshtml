@@ -2,51 +2,71 @@
 @{
     ViewData["Title"] = "Create";
 }
+<div class="main-content">
 
-<style>
-    label, h1, hr {
-        color: #FF7636;
-    }
-</style>
-<h1 class="text-center display-3">Create Food</h1>
-<hr />
+    <div class="page-content">
+        <div class="container-fluid">
 
-<div class="mx-auto d-block">
-    <form enctype="multipart/form-data" class="mx-auto" method="post" asp-action="Create">
-        <div class="row">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h2 class=" m-auto">Add Foods</h2>
 
-            <div class="form-group col">
-                <label asp-for="Name" class="control-label ">Name</label>
-                <input asp-for="Name" class="form-control" placeholder="Name">
+                    </div>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Description" class="control-label ">Description</label>
-                <input asp-for="Description" class="form-control" placeholder="Description">
-            </div>
-            <div class="form-group col">
-                <label asp-for="CategoriesId" class="control-label">Food Category</label>
-                <select asp-for="CategoriesId" class="form-control" asp-items="ViewBag.CategoriesId"></select>
-            </div>
-            <div class="form-group col">
-                <label asp-for="RestaurantsId" class="control-label">Food Restaurants</label>
-                <select asp-for="RestaurantsId" class="form-control" asp-items="ViewBag.RestaurantsId"></select>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="mb-3">
+                                            <label asp-for="Name">Name</label>
+                                            <input asp-for="Name" class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label asp-for="Image">Image</label>
+                                            <input asp-for="Image" type="file" name="imageFile" class="form-control" placeholder="Image">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="RestaurantsId" class="control-label">Restaurants</label>
+                                            <select asp-for="RestaurantsId" asp-items="ViewBag.RestaurantsId" class="form-control select2">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label asp-for="CategoriesId" class="control-label">Categories</label>
+                                            <select asp-for="CategoriesId" asp-items="ViewBag.CategoriesId" class="form-control select2">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                          <div class=" m-auto">
+                                            <label asp-for="Description"> Description</label>
+                                            <textarea class="form-control" asp-for="Description" rows="5" placeholder="Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save Changes</button>
+                                    <a asp-action="Index" class="btn btn-secondary waves-effect waves-light">Back to List</a>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group col">
-            <div class="custom-file" style="width: 200px;">
-                <label asp-for="Image" class="control-label ">Image</label>
-                <input type="file" asp-for="Image" name="imageFile" class="form-control">
-                       
-            </div>
-        </div>
-        <div class="form-group mt-4 text-center">
-            <input type="submit" value="Create" class="btn btn-outline-success btn-lg" />
-        </div>
-    </form>
-</div>
-
-<div>
-    <a class="btn btn-outline-info btn-lg text-decoration-none  float-end" asp-action="Index">Back to List</a>
+    </div>
 </div>
 

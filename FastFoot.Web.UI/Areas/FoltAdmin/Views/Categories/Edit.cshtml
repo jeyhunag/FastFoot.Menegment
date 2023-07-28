@@ -3,33 +3,54 @@
     ViewData["Title"] = "Edit";
 }
 
+<div class="main-content">
 
-<h1 class="text-center">Edit Categories</h1>
-<hr />
+    <div class="page-content">
+        <div class="container-fluid">
 
-<div class="mx-auto d-block">
-    <form class="mx-auto" asp-action="Edit">
-        <div class="row">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h2 class=" m-auto">Edit Categories</h2>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group col">
-                <label asp-for="Name" for="Name" class="control-label ">Name</label>
-                <input asp-for="Name" class="form-control" placeholder="Name">
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Description" class="control-label">Description</label>
-                <input asp-for="Description" class="form-control" placeholder="Description" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="Edit" method="post">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="mb-3">
+                                            <label asp-for="Name">Name</label>
+                                            <input asp-for="Name" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class=" m-auto">
+                                            <label asp-for="Description"> Description</label>
+                                            <textarea class="form-control" asp-for="Description" rows="5" placeholder="Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save Changes</button>
+                                    <a asp-action="Index" class="btn btn-secondary waves-effect waves-light">Back to List</a>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group mt-4 text-center">
-            <input type="submit" value="Create" class="btn btn-outline-success btn-lg" />
-        </div>
-    </form>
+    </div>
 </div>
-
-<div>
-    <a class="btn btn-outline-info btn-lg text-decoration-none  float-end" asp-action="Index">Back to List</a>
-</div>
-
