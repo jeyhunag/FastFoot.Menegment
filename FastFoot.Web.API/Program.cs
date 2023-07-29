@@ -1,4 +1,3 @@
-
 using FastFood.DAL.DbModel;
 using Microsoft.EntityFrameworkCore;
 
