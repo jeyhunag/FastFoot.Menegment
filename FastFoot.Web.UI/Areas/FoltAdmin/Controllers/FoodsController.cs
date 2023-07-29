@@ -22,7 +22,8 @@ namespace FastFoot.Web.UI.Areas.Controllers
         // GET: CitiesController
         public async Task<IActionResult> Index()
         {
-            var food = _db.foods.Include(p => p.Categories);
+            var food = _db.foods.Include(p => p.Categories).
+                Include(p => p.Restaurants);
             return View(await food.ToListAsync());
         }
 

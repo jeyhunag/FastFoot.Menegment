@@ -39,8 +39,8 @@
                                     <th class="align-middle">ID</th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Description</th>
-                                    <th class="align-middle">Restaurants ID</th>
-                                    <th class="align-middle">Categories ID</th>
+                                    <th class="align-middle">Restaurants</th>
+                                    <th class="align-middle">Categories</th>
                                     <th class="align-middle">Edit | Delete</th>
                                 </tr>
                             </thead>
@@ -63,10 +63,10 @@
                                             @item.Description
                                         </td>
                                         <td>
-                                            @item.RestaurantsId
+                                            @item.Restaurants.Name
                                         </td>
                                         <td>
-                                            @item.CategoriesId
+                                            @item.Categories.Name
                                         </td>
                                         <td>
                                             <div class="d-flex gap-3">
