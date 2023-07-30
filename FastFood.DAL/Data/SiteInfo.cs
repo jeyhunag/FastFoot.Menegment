@@ -12,7 +12,6 @@ namespace FastFood.DAL.Data
     public class SiteInfo : BaseEntity ,IBaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
         public string Logo { get; set; }
         public string FavIcon { get; set; }
 

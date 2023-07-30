@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastFood.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230727151613_init")]
-    partial class init
+    [Migration("20230730131805_inits")]
+    partial class inits
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,68 @@ namespace FastFood.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("FastFood.DAL.Data.Banner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banners");
+                });
+
+            modelBuilder.Entity("FastFood.DAL.Data.Campaign", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("FoodsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RestaurantsId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodsId");
+
+                    b.HasIndex("RestaurantsId");
+
+                    b.ToTable("Campaigns");
+                });
 
             modelBuilder.Entity("FastFood.DAL.Data.Categories", b =>
                 {
@@ -36,6 +98,10 @@ namespace FastFood.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -136,6 +202,9 @@ namespace FastFood.DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -299,6 +368,72 @@ namespace FastFood.DAL.Migrations
                     b.ToTable("restaurants");
                 });
 
+            modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CitiesId");
+
+                    b.ToTable("SiteInfos");
+                });
+
+            modelBuilder.Entity("FastFood.DAL.Data.Campaign", b =>
+                {
+                    b.HasOne("FastFood.DAL.Data.Foods", "Foods")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("FoodsId");
+
+                    b.HasOne("FastFood.DAL.Data.Restaurants", "Restaurants")
+                        .WithMany()
+                        .HasForeignKey("RestaurantsId");
+
+                    b.Navigation("Foods");
+
+                    b.Navigation("Restaurants");
+                });
+
             modelBuilder.Entity("FastFood.DAL.Data.Courier", b =>
                 {
                     b.HasOne("FastFood.DAL.Data.Cities", "Cities")
@@ -375,6 +510,17 @@ namespace FastFood.DAL.Migrations
                     b.Navigation("Cities");
                 });
 
+            modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
+                {
+                    b.HasOne("FastFood.DAL.Data.Cities", "Cities")
+                        .WithMany("SiteInfos")
+                        .HasForeignKey("CitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cities");
+                });
+
             modelBuilder.Entity("FastFood.DAL.Data.Categories", b =>
                 {
                     b.Navigation("Foods");
@@ -387,6 +533,8 @@ namespace FastFood.DAL.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Restaurants");
+
+                    b.Navigation("SiteInfos");
                 });
 
             modelBuilder.Entity("FastFood.DAL.Data.Courier", b =>
@@ -396,6 +544,8 @@ namespace FastFood.DAL.Migrations
 
             modelBuilder.Entity("FastFood.DAL.Data.Foods", b =>
                 {
+                    b.Navigation("Campaigns");
+
                     b.Navigation("Orders");
                 });
 

@@ -5,10 +5,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FastFood.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class inits : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Banners",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banners", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "categories",
                 columns: table => new
@@ -17,6 +33,7 @@ namespace FastFood.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -101,6 +118,34 @@ namespace FastFood.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SiteInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FavIcon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CitiesId = table.Column<int>(type: "int", nullable: false),
+                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteInfos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SiteInfos_cities_CitiesId",
+                        column: x => x.CitiesId,
+                        principalTable: "cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "foods",
                 columns: table => new
                 {
@@ -111,6 +156,7 @@ namespace FastFood.DAL.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RestaurantsId = table.Column<int>(type: "int", nullable: false),
                     CategoriesId = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<int>(type: "int", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -130,6 +176,34 @@ namespace FastFood.DAL.Migrations
                         principalTable: "restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Campaigns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RestaurantsId = table.Column<int>(type: "int", nullable: true),
+                    FoodsId = table.Column<int>(type: "int", nullable: true),
+                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Campaigns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Campaigns_foods_FoodsId",
+                        column: x => x.FoodsId,
+                        principalTable: "foods",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Campaigns_restaurants_RestaurantsId",
+                        column: x => x.RestaurantsId,
+                        principalTable: "restaurants",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +253,16 @@ namespace FastFood.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Campaigns_FoodsId",
+                table: "Campaigns",
+                column: "FoodsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Campaigns_RestaurantsId",
+                table: "Campaigns",
+                column: "RestaurantsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_couriers_CitiesId",
                 table: "couriers",
                 column: "CitiesId");
@@ -218,12 +302,26 @@ namespace FastFood.DAL.Migrations
                 name: "IX_restaurants_CitiesId",
                 table: "restaurants",
                 column: "CitiesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SiteInfos_CitiesId",
+                table: "SiteInfos",
+                column: "CitiesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Banners");
+
+            migrationBuilder.DropTable(
+                name: "Campaigns");
+
+            migrationBuilder.DropTable(
                 name: "orders");
+
+            migrationBuilder.DropTable(
+                name: "SiteInfos");
 
             migrationBuilder.DropTable(
                 name: "couriers");

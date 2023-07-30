@@ -16,6 +16,7 @@ namespace FastFood.DAL.Data
         public int CategoriesId { get; set; }
         public Categories Categories { get; set; }
         public virtual ICollection<Orders>? Orders { get; set; }
+        public virtual ICollection<Campaign>? Campaigns { get; set; }
         public int Discount { get; set; }
 
     }

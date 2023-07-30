@@ -369,7 +369,10 @@ namespace FastFood.DAL.Migrations
             modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -417,7 +420,7 @@ namespace FastFood.DAL.Migrations
             modelBuilder.Entity("FastFood.DAL.Data.Campaign", b =>
                 {
                     b.HasOne("FastFood.DAL.Data.Foods", "Foods")
-                        .WithMany()
+                        .WithMany("Campaigns")
                         .HasForeignKey("FoodsId");
 
                     b.HasOne("FastFood.DAL.Data.Restaurants", "Restaurants")
@@ -508,7 +511,7 @@ namespace FastFood.DAL.Migrations
             modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
                 {
                     b.HasOne("FastFood.DAL.Data.Cities", "Cities")
-                        .WithMany()
+                        .WithMany("SiteInfos")
                         .HasForeignKey("CitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -528,6 +531,8 @@ namespace FastFood.DAL.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Restaurants");
+
+                    b.Navigation("SiteInfos");
                 });
 
             modelBuilder.Entity("FastFood.DAL.Data.Courier", b =>
@@ -537,6 +542,8 @@ namespace FastFood.DAL.Migrations
 
             modelBuilder.Entity("FastFood.DAL.Data.Foods", b =>
                 {
+                    b.Navigation("Campaigns");
+
                     b.Navigation("Orders");
                 });
 

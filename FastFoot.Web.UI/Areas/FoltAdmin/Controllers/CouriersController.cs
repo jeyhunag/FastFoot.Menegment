@@ -55,7 +55,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
         {
 
             var courier = await _db.couriers.FindAsync(id);
-            ViewData["CitiesId"] = new SelectList(_db.categories, "Id", "Name");
+            ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name");
             return View(courier);
         }
 
