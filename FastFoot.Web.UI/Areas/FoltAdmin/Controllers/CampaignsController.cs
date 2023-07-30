@@ -3,44 +3,43 @@ using FastFood.DAL.DbModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging.Signing;
 
-namespace FastFoot.Web.UI.Areas.Controllers
+namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 {
     [Area("FoltAdmin")]
-    public class FoodsController : Controller
+    public class CampaignsController : Controller
     {
         private readonly AppDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly string _imgPath = @"img/";
 
-        public FoodsController(AppDbContext db, IWebHostEnvironment webHostEnvironment)
+        public CampaignsController(AppDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             this._db = db;
             _webHostEnvironment = webHostEnvironment;
         }
-        // GET: CitiesController
+        // GET: CampaignsController
         public async Task<IActionResult> Index()
         {
-            var food = _db.foods.Include(p => p.Categories).
+            var cam = _db.Campaigns.Include(p => p.Foods).
                 Include(p => p.Restaurants);
-            return View(await food.ToListAsync());
+            return View(await cam.ToListAsync());
         }
 
 
 
-        // GET: CitiesController/Create
+        // GET: CampaignsController/Create
         public ActionResult Create()
         {
-            ViewData["CategoriesId"] = new SelectList(_db.categories, "Id", "Name");
+            ViewData["FoodsId"] = new SelectList(_db.foods, "Id", "Name");
             ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name");
             return View();
         }
 
-        // POST: CitiesController/Create
+        // POST: CampaignsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Foods foods, IFormFile imageFile)
+        public async Task<IActionResult> Create(Campaign campaign, IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -49,37 +48,38 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
-                    foods.Image = imagePath;
+                    campaign.ImagePath = imagePath;
                 }
             }
             //if (ModelState.IsValid)
             //{
 
-            await _db.foods.AddAsync(foods);
-                await _db.SaveChangesAsync();
+            await _db.Campaigns.AddAsync(campaign);
+            await _db.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
             //}
-            ViewData["CategoriesId"] = new SelectList(_db.categories, "Id", "Name", foods.CategoriesId);
-            ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", foods.RestaurantsId);
-            return View(foods);
+
+            ViewData["CategoriesId"] = new SelectList(_db.foods, "Id", "Name", campaign.FoodsId);
+            ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", campaign.RestaurantsId);
+            return View(campaign);
         }
 
 
-        // GET: CitiesController/Edit/5
+        // GET: CampaignsController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
 
-            var foods = await _db.foods.FindAsync(id);
-            ViewData["CategoriesId"] = new SelectList(_db.categories, "Id", "Name");
+            var com = await _db.Campaigns.FindAsync(id);
+            ViewData["FoodsId"] = new SelectList(_db.foods, "Id", "Name");
             ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name");
-            return View(foods);
+            return View(com);
         }
 
-        // POST: CitiesController/Edit/5
+        // POST: CampaignsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Foods foods, IFormFile imageFile)
+        public async Task<IActionResult> Edit(Campaign campaign, IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -88,57 +88,57 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
-                    foods.Image = imagePath;
+                    campaign.ImagePath = imagePath;
                 }
             }
 
 
             //if (ModelState.IsValid)
             //{
-                _db.Update(foods);
+            _db.Update(campaign);
 
-                await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
             //}
 
-            ViewData["CategoriesId"] = new SelectList(_db.categories, "Id", "Name", foods.CategoriesId);
-            ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", foods.RestaurantsId);
+            ViewData["CategoriesId"] = new SelectList(_db.foods, "Id", "Name", campaign.FoodsId);
+            ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", campaign.RestaurantsId);
 
-            return View(foods);
+            return View(campaign);
         }
 
-        // GET: CitiesController/Delete/5
+        // GET: CampaignsController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _db.foods == null)
+            if (id == null || _db.Campaigns == null)
             {
                 return NotFound();
             }
 
-            var foods = await _db.foods
-                .Include(p => p.Categories)
+            var cam = await _db.Campaigns
+                .Include(p => p.Foods)
                 .Include(p => p.Restaurants)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (foods == null)
+            if (cam == null)
             {
                 return NotFound();
             }
 
-            return View(foods);
+            return View(cam);
         }
 
-        // POST: CitiesController/Delete/5
+        // POST: CampaignsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int Id, Foods foods)
+        public async Task<IActionResult> Delete(int Id, Campaign campaign)
         {
 
-            var food = await _db.foods.FindAsync(Id);
-            if (foods != null)
+            var cam = await _db.Campaigns.FindAsync(Id);
+            if (cam != null)
             {
-                foods.DeletedDate = DateTime.Now;
-                _db.foods.Remove(foods);
+                campaign.DeletedDate = DateTime.Now;
+                _db.Campaigns.Remove(campaign);
             }
 
             await _db.SaveChangesAsync();

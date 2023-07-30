@@ -1,7 +1,8 @@
-﻿@model Foods
+﻿@model Campaign
 @{
     ViewData["Title"] = "Create";
 }
+
 <div class="main-content">
 
     <div class="page-content">
@@ -11,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h2 class=" m-auto">Add Foods</h2>
+                        <h2 class=" m-auto">Add Campaign</h2>
 
                     </div>
                 </div>
@@ -27,16 +28,14 @@
                                     <div class="col-sm-6">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="mb-3">
-                                            <label asp-for="Name">Name</label>
-                                            <input asp-for="Name" class="form-control" placeholder="Name">
+                                            <label asp-for="FoodsId" class="control-label">Foods</label>
+                                            <select asp-for="FoodsId" asp-items="ViewBag.FoodsId" class="form-control select2">
+                                                <option>Select</option>
+                                            </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label asp-for="Image">Image</label>
-                                            <input asp-for="Image" type="file" name="imageFile" class="form-control" placeholder="Image">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label asp-for="Discount">Discount</label>
-                                            <input asp-for="Discount" class="form-control" placeholder="Discount">
+                                            <label asp-for="ImagePath">Image</label>
+                                            <input asp-for="ImagePath" type="file" name="imageFile" class="form-control" placeholder="Image">
                                         </div>
                                     </div>
 
@@ -46,16 +45,6 @@
                                             <select asp-for="RestaurantsId" asp-items="ViewBag.RestaurantsId" class="form-control select2">
                                                 <option>Select</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label asp-for="CategoriesId" class="control-label">Categories</label>
-                                            <select asp-for="CategoriesId" asp-items="ViewBag.CategoriesId" class="form-control select2">
-                                                <option>Select</option>
-                                            </select>
-                                        </div>
-                                          <div class=" m-auto">
-                                            <label asp-for="Description"> Description</label>
-                                            <textarea class="form-control" asp-for="Description" rows="5" placeholder="Description"></textarea>
                                         </div>
                                     </div>
                                 </div>

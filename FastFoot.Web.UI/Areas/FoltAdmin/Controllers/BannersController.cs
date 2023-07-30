@@ -1,40 +1,39 @@
 ﻿using FastFood.DAL.Data;
 using FastFood.DAL.DbModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FastFoot.Web.UI.Areas.Controllers
+namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 {
     [Area("FoltAdmin")]
-    public class CategoriesController : Controller
+    public class BannersController : Controller
     {
         private readonly AppDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly string _imgPath = @"img/";
-        public CategoriesController(AppDbContext db, IWebHostEnvironment webHostEnvironment)
+        public BannersController(AppDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             this._db = db;
             this._webHostEnvironment = webHostEnvironment;
         }
-        // GET: CitiesController
+        // GET: BannersController
         public async Task<IActionResult> Index()
         {
-            return View(await _db.categories.ToListAsync());
+            return View(await _db.Banners.ToListAsync());
         }
 
 
 
-        // GET: CitiesController/Create
+        // GET: BannersController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CitiesController/Create
+        // POST: BannersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Categories categories, IFormFile imageFile)
+        public async Task<IActionResult> Create(Banner banner, IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -43,35 +42,35 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
-                    categories.ImagePath = imagePath;
+                    banner.ImagePath = imagePath;
                 }
             }
 
             //if (ModelState.IsValid)
             //{
-            await _db.categories.AddAsync(categories);
-                await _db.SaveChangesAsync();
+            await _db.Banners.AddAsync(banner);
+            await _db.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
             //}
 
-            return View(categories);
+            return View(banner);
         }
 
 
-        // GET: CitiesController/Edit/5
+        // GET: BannersController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
 
-            var categories = await _db.categories.FindAsync(id);
+            var banner = await _db.Banners.FindAsync(id);
 
-            return View(categories);
+            return View(banner);
         }
 
-        // POST: CitiesController/Edit/5
+        // POST: BannersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Categories categories, IFormFile imageFile)
+        public async Task<IActionResult> Edit(Banner banner, IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -80,42 +79,42 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
-                    categories.ImagePath = imagePath;
+                    banner.ImagePath = imagePath;
                 }
             }
             //if (ModelState.IsValid)
             //{
-                _db.Update(categories);
-                await _db.SaveChangesAsync();
+            _db.Update(banner);
+            await _db.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
             //}
-            return View(categories);
+            return View(banner);
         }
 
-        // GET: CitiesController/Delete/5
+        // GET: BannersController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var categories = await _db.categories.FindAsync(id);
-            return View(categories);
+            var banner = await _db.Banners.FindAsync(id);
+            return View(banner);
         }
 
-        // POST: CitiesController/Delete/5
+        // POST: BannersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int Id, Categories categories)
+        public async Task<IActionResult> Delete(int Id, Banner banner)
         {
 
 
-            await _db.categories.FindAsync(Id);
-            if (categories != null)
+            await _db.Banners.FindAsync(Id);
+            if (banner != null)
             {
-                categories.DeletedDate = DateTime.Now;
-                _db.categories.Remove(categories);
+                banner.DeletedDate = DateTime.Now;
+                _db.Banners.Remove(banner);
             }
             _db.SaveChanges();
             return RedirectToAction("index");
 
-        }   
+        }
     }
 }

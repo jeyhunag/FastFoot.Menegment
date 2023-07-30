@@ -1,4 +1,4 @@
-﻿@model List<Courier>
+﻿@model List<Banner>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-10" style="margin-left:17%;">
             <div class="card mt-5">
-                <h1 class="mt-5 m-auto">Couriers</h1>
+                <h1 class="mt-5 m-auto">Banner</h1>
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-4">
@@ -35,9 +35,8 @@
                                             <label class="form-check-label" for="checkAll"></label>
                                         </div>
                                     </th>
+                                    <th class="align-middle">Image</th>
                                     <th class="align-middle">ID</th>
-                                    <th class="align-middle">Name</th>
-                                    <th class="align-middle">Cities</th>
                                     <th class="align-middle">Edit | Delete</th>
                                 </tr>
                             </thead>
@@ -53,11 +52,8 @@
                                                 <label class="form-check-label" for="orderidcheck01"></label>
                                             </div>
                                         </td>
+                                        <td><img src="~/@item.ImagePath" alt="Image" class="avatar-sm"></td>
                                         <td>@item.Id</td>
-                                        <td>@item.Name</td>
-                                        <td>
-                                            @item.CitiesId
-                                        </td>
                                         <td>
                                             <div class="d-flex gap-3">
                                                 <a asp-action="Edit" asp-route-id="@item.Id" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
@@ -92,5 +88,4 @@
     </div>
     <!-- end row -->
 </div>
-
 

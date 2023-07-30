@@ -23,7 +23,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form asp-action="Edit" method="post">
+                            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,6 +37,13 @@
                                         <div class=" m-auto">
                                             <label asp-for="Description"> Description</label>
                                             <textarea class="form-control" asp-for="Description" rows="5" placeholder="Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <input type="hidden" asp-for="ImagePath" value="@Model.ImagePath" />
+                                            <label asp-for="ImagePath">Image</label>
+                                            <input asp-for="ImagePath" type="file" name="imageFile" class="form-control" placeholder="Image">
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-﻿@model Categories
+﻿@model Banner
 @{
     ViewData["Title"] = "Delete";
 }
@@ -10,7 +10,7 @@
         color: white;
         font-weight: bolder;
         width: 100%;
-        margin-top:120px;
+        margin-top: 120px;
         margin-left: 130px;
     }
 
@@ -37,18 +37,16 @@
 <div class="container">
     <div class="row">
         <!--Card 1-->
-        <div class="col-md-6 mx-auto d-block mt-5 ">
-            <div class="card ms-5">
+        <div class="col-md-6 mx-auto d-block">
+            <div class="card">
                 <div class="card-header border-4 text-center">
                     <h1 class="display-4 mt-5">Delete </h1>
                 </div>
                 <div class="deleteCart">
-                    <img src="~/@Html.DisplayFor(model => model.ImagePath)" alt="Img" class=" img-fluid">
+                    <img class="img-fluid" src="~/@Html.DisplayFor(model => model.ImagePath)" alt="Img">
                 </div>
                 <div class=" list-box">
                     <div class="my-3"> Id: <span>@Html.DisplayFor(model => model.Id)</span></div>
-                    <div class="my-3"> Name: <span>@Html.DisplayFor(model => model.Name)</span></div>
-                    <div> Surname:<span>@Html.DisplayFor(model => model.Description)</span></div>
                 </div>
 
                 <form class="card-footer p-0 text-center " asp-action="Delete">
