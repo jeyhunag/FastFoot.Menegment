@@ -60,14 +60,16 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                     siteInfo.FavIcon = imagePath;
                 }
             }
-            //if (ModelState.IsValid)
-            //{
 
-            await _db.SiteInfos.AddAsync(siteInfo);
-            await _db.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
 
-            return RedirectToAction("Index");
-            //}
+                await _db.SiteInfos.AddAsync(siteInfo);
+                await _db.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+
             ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name", siteInfo.CitiesId);
             return View(siteInfo);
         }

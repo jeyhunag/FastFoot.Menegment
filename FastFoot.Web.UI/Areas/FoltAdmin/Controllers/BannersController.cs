@@ -46,13 +46,13 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                 }
             }
 
-            //if (ModelState.IsValid)
-            //{
-            await _db.Banners.AddAsync(banner);
-            await _db.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                await _db.Banners.AddAsync(banner);
+                await _db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
-            //}
+                return RedirectToAction("Index");
+            }
 
             return View(banner);
         }
@@ -70,8 +70,9 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         // POST: BannersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Banner banner, IFormFile imageFile)
+        public async Task<IActionResult> Edit( Banner banner, IFormFile imageFile)
         {
+
             if (imageFile != null && imageFile.Length > 0)
             {
                 var imagePath = _imgPath + imageFile.FileName;
@@ -82,15 +83,18 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                     banner.ImagePath = imagePath;
                 }
             }
+
             //if (ModelState.IsValid)
             //{
-            _db.Update(banner);
-            await _db.SaveChangesAsync();
+                _db.Update(banner);
+                await _db.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             //}
+
             return View(banner);
         }
+
 
         // GET: BannersController/Delete/5
         public async Task<IActionResult> Delete(int id)

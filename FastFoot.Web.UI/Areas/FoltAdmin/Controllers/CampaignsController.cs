@@ -51,14 +51,14 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                     campaign.ImagePath = imagePath;
                 }
             }
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+            {
 
-            await _db.Campaigns.AddAsync(campaign);
-            await _db.SaveChangesAsync();
+                await _db.Campaigns.AddAsync(campaign);
+                await _db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
-            //}
+                return RedirectToAction("Index");
+            }
 
             ViewData["CategoriesId"] = new SelectList(_db.foods, "Id", "Name", campaign.FoodsId);
             ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", campaign.RestaurantsId);
@@ -95,11 +95,11 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
             //if (ModelState.IsValid)
             //{
-            _db.Update(campaign);
+            //    _db.Update(campaign);
 
-            await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             //}
 
             ViewData["CategoriesId"] = new SelectList(_db.foods, "Id", "Name", campaign.FoodsId);

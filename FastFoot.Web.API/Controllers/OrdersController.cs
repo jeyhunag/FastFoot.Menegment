@@ -16,14 +16,15 @@ namespace FastFoot.Web.API.Controllers
             _context = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Orders>>> GetFoods()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Orders>>> GetOrders()
         {
             return await _context.orders.ToListAsync();
         }
 
         // GET: api/Order/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Orders>> GetFoods(int id)
+        public async Task<ActionResult<Orders>> GetOrders(int id)
         {
             var order = await _context.orders.FindAsync(id);
 

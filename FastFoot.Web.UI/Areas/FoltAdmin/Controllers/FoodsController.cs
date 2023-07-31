@@ -52,14 +52,14 @@ namespace FastFoot.Web.UI.Areas.Controllers
                     foods.Image = imagePath;
                 }
             }
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+            {
 
-            await _db.foods.AddAsync(foods);
+                await _db.foods.AddAsync(foods);
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
-            //}
+            }
             ViewData["CategoriesId"] = new SelectList(_db.categories, "Id", "Name", foods.CategoriesId);
             ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", foods.RestaurantsId);
             return View(foods);

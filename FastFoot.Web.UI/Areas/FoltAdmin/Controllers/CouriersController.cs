@@ -37,14 +37,14 @@ namespace FastFoot.Web.UI.Areas.Controllers
         public async Task<IActionResult> Create(Courier courier)
         {
 
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+            {
 
-            await _db.couriers.AddAsync(courier);
-            await _db.SaveChangesAsync();
+                await _db.couriers.AddAsync(courier);
+                await _db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
-            //}
+                return RedirectToAction("Index");
+            }
             ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name", courier.CitiesId);
             return View(courier);
         }

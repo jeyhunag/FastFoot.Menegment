@@ -47,13 +47,13 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 }
             }
 
-            //if (ModelState.IsValid)
-            //{
-            await _db.categories.AddAsync(categories);
+            if (!ModelState.IsValid)
+            {
+                await _db.categories.AddAsync(categories);
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
-            //}
+            }
 
             return View(categories);
         }
@@ -83,6 +83,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
                     categories.ImagePath = imagePath;
                 }
             }
+
             //if (ModelState.IsValid)
             //{
                 _db.Update(categories);

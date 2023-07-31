@@ -3,7 +3,6 @@ using FastFood.DAL.DbModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace FastFoot.Web.API.Controllers
 {
     [Route("api/[controller]")]

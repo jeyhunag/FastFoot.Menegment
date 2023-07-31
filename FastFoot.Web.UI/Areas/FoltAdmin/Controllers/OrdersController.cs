@@ -46,15 +46,15 @@ namespace FastFoot.Web.UI.Areas.Controllers
         public async Task<IActionResult> Create(Orders orders)
         {
 
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+            {
 
                 await _db.orders.AddAsync(orders);
                 await _db.SaveChangesAsync();
 
                 int newOrderId = orders.Id;
-            return RedirectToAction("Index");
-            //}
+                return RedirectToAction("Index");
+            }
             ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name", orders.CitiesId);
             ViewData["RestaurantsId"] = new SelectList(_db.restaurants, "Id", "Name", orders.RestaurantsId);
             ViewData["FoodsId"] = new SelectList(_db.foods, "Id", "Name", orders.FoodsId);

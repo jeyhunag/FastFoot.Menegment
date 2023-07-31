@@ -8,33 +8,34 @@ namespace FastFoot.Web.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoodsController : ControllerBase
+    public class BannersController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public FoodsController(AppDbContext context)
+        public BannersController(AppDbContext context)
         {
             _context = context;
         }
 
+        // GET: api/Courier
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Foods>>> GetFoods()
+        public async Task<ActionResult<IEnumerable<Banner>>> GetBanners()
         {
-            return await _context.foods.ToListAsync();
+            return await _context.Banners.ToListAsync();
         }
 
-        // GET: api/Order/5
+        // GET: api/Courier/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Foods>> GetFoods(int id)
+        public async Task<ActionResult<Banner>> GetBanner(int id)
         {
-            var food = await _context.foods.FindAsync(id);
+            var ban = await _context.Banners.FindAsync(id);
 
-            if (food == null)
+            if (ban == null)
             {
                 return NotFound();
             }
 
-            return food;
+            return ban;
         }
     }
 }
