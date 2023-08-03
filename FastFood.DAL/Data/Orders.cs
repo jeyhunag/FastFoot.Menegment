@@ -23,5 +23,6 @@ namespace FastFood.DAL.Data
         public Cities Cities { get; set; }
         public int CourierId { get; set; }
         public Courier Courier { get; set; }
+        public string? QR { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace FastFoot.Web.UI
             pattern: "Foltadmin/{controller=Home}/{action=index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Homes}/{action=Index}/{id?}");
 
             app.Run();
         }
