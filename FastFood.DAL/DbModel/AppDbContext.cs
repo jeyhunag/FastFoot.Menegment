@@ -25,6 +25,8 @@ namespace FastFood.DAL.DbModel
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<SiteInfo> SiteInfos { get; set; }
+        public DbSet<MetaDescription> MetaDescriptions { get; set; }
+        public DbSet<MetaKeyword> MetaKeywords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

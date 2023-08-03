@@ -16,6 +16,8 @@ namespace FastFood.DAL.Data
         public virtual ICollection<Courier>? Couriers { get; set; }
         public virtual ICollection<Orders>? Orders { get; set; }
         public virtual ICollection<SiteInfo>? SiteInfos { get; set; }
+        public virtual ICollection<MetaDescription>? MetaDescriptions { get; set; }
+        public virtual ICollection<MetaKeyword>? MetaKeywords { get; set; }
 
     }
 }
