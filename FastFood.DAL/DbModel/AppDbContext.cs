@@ -28,6 +28,8 @@ namespace FastFood.DAL.DbModel
         public DbSet<MetaDescription> MetaDescriptions { get; set; }
         public DbSet<MetaKeyword> MetaKeywords { get; set; }
         public DbSet<ProductImages> ProductImages { get; set; }
+        public DbSet<BannersImage> BannersImages { get; set; }
+        public DbSet<RestaurantsImage> RestaurantsImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

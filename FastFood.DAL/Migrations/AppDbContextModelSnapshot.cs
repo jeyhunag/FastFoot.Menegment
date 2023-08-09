@@ -48,6 +48,40 @@ namespace FastFood.DAL.Migrations
                     b.ToTable("Banners");
                 });
 
+            modelBuilder.Entity("FastFood.DAL.Data.BannersImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BannerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BannerId");
+
+                    b.ToTable("BannersImages");
+                });
+
             modelBuilder.Entity("FastFood.DAL.Data.Campaign", b =>
                 {
                     b.Property<int>("Id")
@@ -477,6 +511,40 @@ namespace FastFood.DAL.Migrations
                     b.ToTable("restaurants");
                 });
 
+            modelBuilder.Entity("FastFood.DAL.Data.RestaurantsImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RestaurantsId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantsId");
+
+                    b.ToTable("RestaurantsImages");
+                });
+
             modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -526,6 +594,17 @@ namespace FastFood.DAL.Migrations
                     b.HasIndex("CitiesId");
 
                     b.ToTable("SiteInfos");
+                });
+
+            modelBuilder.Entity("FastFood.DAL.Data.BannersImage", b =>
+                {
+                    b.HasOne("FastFood.DAL.Data.Banner", "Banner")
+                        .WithMany("BannersImages")
+                        .HasForeignKey("BannerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Banner");
                 });
 
             modelBuilder.Entity("FastFood.DAL.Data.Campaign", b =>
@@ -652,6 +731,17 @@ namespace FastFood.DAL.Migrations
                     b.Navigation("Cities");
                 });
 
+            modelBuilder.Entity("FastFood.DAL.Data.RestaurantsImage", b =>
+                {
+                    b.HasOne("FastFood.DAL.Data.Restaurants", "Restaurants")
+                        .WithMany("RestaurantsImages")
+                        .HasForeignKey("RestaurantsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurants");
+                });
+
             modelBuilder.Entity("FastFood.DAL.Data.SiteInfo", b =>
                 {
                     b.HasOne("FastFood.DAL.Data.Cities", "Cities")
@@ -661,6 +751,11 @@ namespace FastFood.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("FastFood.DAL.Data.Banner", b =>
+                {
+                    b.Navigation("BannersImages");
                 });
 
             modelBuilder.Entity("FastFood.DAL.Data.Categories", b =>
@@ -700,6 +795,8 @@ namespace FastFood.DAL.Migrations
             modelBuilder.Entity("FastFood.DAL.Data.Restaurants", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("RestaurantsImages");
 
                     b.Navigation("foods");
                 });

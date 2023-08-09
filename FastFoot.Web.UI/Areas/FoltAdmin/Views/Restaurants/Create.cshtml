@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Create";
 }
+@section css{
+    <link href="~/assets/multiple-image-input/imager.css" rel="stylesheet"   />
+}
 <div class="main-content">
 
     <div class="page-content">
@@ -24,6 +27,10 @@
                         <div class="card-body">
                             <form asp-action="Create" method="post" enctype="multipart/form-data">
                                 <div class="row">
+                                    <div class="col-md-12" style="display: inline-block;">
+                                        <div style="width: 600px;" class="imager-container" id="viewer1" name="files">
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="mb-3">
@@ -45,10 +52,6 @@
                                         <div class="mb-3">
                                             <label asp-for="Number">Number</label>
                                             <input asp-for="Number" class="form-control" placeholder="Number">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label asp-for="Image">Image</label>
-                                            <input asp-for="Image" type="file" name="imageFile" class="form-control" placeholder="Image">
                                         </div>
                                     </div>
 
@@ -97,3 +100,16 @@
 </div>
 
 
+@section Scripts{
+    <script src="~/assets/multiple-image-input/jquery.image-input.js"></script>
+    <script src="~/assets/multiple-image-input/imager.js"></script>
+    <script>
+        $('#viewer1').imgadd({
+            tnWidth: '120px',
+            tnHeight: '120px',
+            fontSize: '55px',
+            plusInnerHtml: '',
+            plusBtnClass: undefined
+        });
+    </script>
+}

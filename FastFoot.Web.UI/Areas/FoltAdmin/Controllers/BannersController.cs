@@ -1,7 +1,9 @@
 ﻿using FastFood.DAL.Data;
 using FastFood.DAL.DbModel;
+using FastFoot.Web.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 
 namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 {
@@ -10,11 +12,13 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
     {
         private readonly AppDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly string _imgPath = @"img/";
-        public BannersController(AppDbContext db, IWebHostEnvironment webHostEnvironment)
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment env;
+
+        public BannersController(AppDbContext db, IWebHostEnvironment webHostEnvironment, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             this._db = db;
-            this._webHostEnvironment = webHostEnvironment;
+            _webHostEnvironment = webHostEnvironment;
+            this.env = env;
         }
         // GET: BannersController
         public async Task<IActionResult> Index()
@@ -33,16 +37,26 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         // POST: BannersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Banner banner, IFormFile imageFile)
+        [Obsolete]
+        public async Task<IActionResult> Create(Banner banner)
         {
-            if (imageFile != null && imageFile.Length > 0)
+            banner.BannersImages = new List<BannersImage>();
+            foreach (var item in banner.Files)
             {
-                var imagePath = _imgPath + imageFile.FileName;
-                var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+
+                banner.BannersImages.Add(new BannersImage
                 {
-                    await imageFile.CopyToAsync(stream);
-                    banner.ImagePath = imagePath;
+                    IsMain = item.IsMain,
+                    ImagePath = ImageHelper.Add(item.File, env)
+
+                });
+            }
+
+            foreach (var item in banner.BannersImages)
+            {
+                if (item.IsMain == true)
+                {
+                    banner.ImagePath = item.ImagePath;
                 }
             }
 
@@ -73,16 +87,16 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         public async Task<IActionResult> Edit( Banner banner, IFormFile imageFile)
         {
 
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                var imagePath = _imgPath + imageFile.FileName;
-                var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(stream);
-                    banner.ImagePath = imagePath;
-                }
-            }
+            //if (imageFile != null && imageFile.Length > 0)
+            //{
+            //    var imagePath = _imgPath + imageFile.FileName;
+            //    var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
+            //    using (var stream = new FileStream(fullPath, FileMode.Create))
+            //    {
+            //        await imageFile.CopyToAsync(stream);
+            //        banner.ImagePath = imagePath;
+            //    }
+            //}
 
             //if (ModelState.IsValid)
             //{

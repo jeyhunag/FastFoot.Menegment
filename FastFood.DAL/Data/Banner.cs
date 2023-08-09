@@ -11,11 +11,11 @@ namespace FastFood.DAL.Data
     public class Banner : BaseEntity
     {
         public string ImagePath { get; set; }
-        //public ICollection<ProductImages>? ProductImages { get; set; }
+        public ICollection<BannersImage>? BannersImages { get; set; }
 
-        //[NotMapped]
-        //[Timestamp]
-        //public ImageItemFormModel[]? Files { get; set; }
+        [NotMapped]
+        [Timestamp]
+        public ImageItemFormModel[]? Files { get; set; }
 
     }
 }
