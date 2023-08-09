@@ -39,6 +39,7 @@
                                     <th class="align-middle">ID</th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Description</th>
+                                    <th class="align-middle">Price</th>
                                     <th class="align-middle">Discount</th>
                                     <th class="align-middle">Restaurants</th>
                                     <th class="align-middle">Categories</th>
@@ -57,11 +58,14 @@
                                                 <label class="form-check-label" for="orderidcheck01"></label>
                                             </div>
                                         </td>
-                                        <td><img src="~/@item.Image" alt="" class="avatar-sm"></td>
+                                        <td><img src="~/img/@item.Image" alt="" class="avatar-sm"></td>
                                         <td>@item.Id</td>
                                         <td>@item.Name</td>
                                         <td>
                                             @item.Description
+                                        </td>
+                                        <td>
+                                            @item.Price
                                         </td>
                                         <td>
                                             @item.Discount

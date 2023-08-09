@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+@section css{
+    <link href="~/assets/multiple-image-input/imager.css" rel="stylesheet"   />
+}
 <div class="main-content">
 
     <div class="page-content">
@@ -20,11 +22,20 @@
             <!-- end page title -->
 
             <div class="row">
+
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <form asp-action="Edit" method="post" enctype="multipart/form-data">
                                 <div class="row">
+                                    <div class="col-md-12" style="display: inline-block;">
+                                        <div style="width: 600px;" class="imager-container" id="viewer1" name="files">
+                                            @foreach (var img in Model.ProductImages)
+                                            {
+                                                <label thumb-url="/img/@img.ImagePath" image-id="@img.Id" @(img.IsMain == true ? "checked" : "")></label>
+                                            }
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="mb-3">
@@ -32,9 +43,8 @@
                                             <input asp-for="Name" class="form-control" placeholder="Name">
                                         </div>
                                         <div class="mb-3">
-                                            <input type="hidden" asp-for="Image" value="@Model.Image" />
-                                            <label asp-for="Image">Image</label>
-                                            <input asp-for="Image" type="file" name="imageFile" class="form-control" placeholder="Image">
+                                            <label asp-for="Price">Price</label>
+                                            <input asp-for="Price" type="number" class="form-control" placeholder="Price">
                                         </div>
                                         <div class="mb-3">
                                             <label asp-for="Discount">Discount</label>
@@ -76,3 +86,16 @@
     </div>
 </div>
 
+@section Scripts{
+    <script src="~/assets/multiple-image-input/jquery.image-input.js"></script>
+    <script src="~/assets/multiple-image-input/imager.js"></script>
+    <script>
+        $('#viewer1').imgadd({
+            tnWidth: '120px',
+            tnHeight: '120px',
+            fontSize: '55px',
+            plusInnerHtml: '',
+            plusBtnClass: undefined
+        });
+    </script>
+}

@@ -69,6 +69,7 @@
     <link rel="stylesheet" href="~/asset/css/app.min.css" />
     <link rel="stylesheet" href="~/asset/css/fontawesome.min.css" />
     <link rel="stylesheet" href="~/asset/css/style.css" />
+    @await RenderSectionAsync("css", required: false)
 </head>
 <body>
     @await Component.InvokeAsync("Header")

@@ -1,4 +1,5 @@
 using FastFood.DAL.DbModel;
+using FastFoot.Web.UI.Provider;
 using Microsoft.EntityFrameworkCore;
 
 namespace FastFoot.Web.UI
@@ -9,8 +10,11 @@ namespace FastFoot.Web.UI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            //Boolean 
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
+            });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
