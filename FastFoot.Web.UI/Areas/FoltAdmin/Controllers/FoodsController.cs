@@ -122,17 +122,14 @@ namespace FastFoot.Web.UI.Areas.Controllers
             }
 
 
+
             foreach (var item in foods.Files.Where(f => f.File != null))
             {
-
-
                 foods.ProductImages.Add(new ProductImages
                 {
                     IsMain = item.IsMain,
                     ImagePath = ImageHelper.Add(item.File, env)
                 });
-
-
             }
 
             foreach (var image in foods.ProductImages)
