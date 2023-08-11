@@ -1,38 +1,36 @@
-﻿<section class="space-bottom contact-form-sec">
+﻿@model Contact
+
+<section class="space-bottom contact-form-sec">
     <div class="container">
         <div class="reservation-area">
             <h4 class="sec-title text-center mb-30">Send Us Message</h4>
-            <form action="mail.php"
-                  method="POST"
-                  class="booking-form3 ajax-contact">
+            <form method="post" asp-action="Create"
+                  
+                  class="booking-form3 ">
                 <div class="row">
                     <div class="form-group col-lg-4 col-md-6">
-                        <input type="text"
+                        <input asp-for="FullName" type="text"
                                class="form-control rounded-2"
-                               id="name"
-                               name="name"
-                               placeholder="Your Name" />
+                               name="FullName"
+                               placeholder="Full Name" />
                         <i class="far fa-user"></i>
                     </div>
                     <div class="form-group col-lg-4 col-md-6">
-                        <input type="tel"
+                        <input asp-for="CityName" type="text"
                                class="form-control rounded-2"
-                               id="number"
-                               name="number"
-                               placeholder="Phone Number" />
-                        <i class="far fa-phone"></i>
+                               name="CityName"
+                               placeholder="City Name" />
+                        <i class="fa fa-building"></i>
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="text"
+                        <input asp-for="Email" type="email"
                                class="form-control rounded-2"
-                               id="subject"
-                               name="subject"
-                               placeholder="Subject" />
+                               name="Email"
+                               placeholder="Email" />
                         <i class="far fa-tag"></i>
                     </div>
                     <div class="form-group col-12">
-                        <textarea name="message"
-                                  id="message"
+                        <textarea asp-for="Message" name="Message"
                                   cols="30"
                                   rows="3"
                                   class="form-control rounded-2"
@@ -41,9 +39,8 @@
                     </div>
                 </div>
                 <div class="form-btn text-center">
-                    <button class="th-btn rounded-2">
+                    <input type="submit" value="submit" class="th-btn rounded-2">
                         Send Message<i class="fa-solid fa-arrow-right ms-2"></i>
-                    </button>
                 </div>
                 <p class="form-messages mb-0 mt-3"></p>
             </form>
