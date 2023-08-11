@@ -62,13 +62,13 @@ namespace FastFoot.Web.UI.Controllers
 
 
                 var category = await db.Contacts.AddAsync(contact);
-
+                await db.SaveChangesAsync();
                 if (category != null)
                 {
                     return RedirectToAction("Create");
                 }
-
-                db.Contacts.AddAsync(contact);
+                
+              
             }
             return View(contact);
         }
