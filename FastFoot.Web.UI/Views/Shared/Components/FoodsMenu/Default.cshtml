@@ -3,37 +3,31 @@
     @foreach (var item in Model)
     {
         <div class="col-xl-3 col-lg-4 col-sm-6">
-            <div class="th-menu">
-                <div class="th-menu_img">
-                    <img class="spin"
-                         src="~/img/@item.Image"
-                         alt="menu Image" />
-                    <div class="product-action">
-                        <a href="cart.html">
-                            <span class="action-text">Add To cart</span><span class="icon"><i class="far fa-cart-shopping"></i></span>
-                        </a>
-                        <a href="wishlist.html">
-                            <span class="action-text">Wishlist</span><span class="icon"><i class="far fa-heart"></i></span>
-                        </a>
-                        <a class="popup-content" asp-controller="Details" asp-action="Index" asp-route-id="@item.Id">
-                            <span class="action-text">Quick View</span><span class="icon"><i class="far fa-eye"></i></span>
-                        </a>
+            <a asp-controller="Details" asp-action="Index" asp-route-id="@item.Id">
+
+
+                <div class="th-menu">
+                    <div class="th-menu_img">
+                        <img class="spin"
+                             src="~/img/@item.Image"
+                             alt="menu Image" />
+
+                        <div class="th-menu_discount">
+                            <span class="sale">@item.Discount% OFF</span>
+                        </div>
                     </div>
-                    <div class="th-menu_discount">
-                        <span class="sale">@item.Discount% OFF</span>
+                    <div class="th-menu-content">
+                        <h3 class="th-menu_title">
+                            <a href="shop-details.html">@item.Name</a>
+                        </h3>
+                        <p class="th-menu_desc">@item.Description</p>
+                        <span class="th-menu_price">$19.85</span>
+                    </div>
+                    <div class="fire">
+                        <img src="~/asset/img/update_2/shape/fire.png" alt="shape" />
                     </div>
                 </div>
-                <div class="th-menu-content">
-                    <h3 class="th-menu_title">
-                        <a href="shop-details.html">@item.Name</a>
-                    </h3>
-                    <p class="th-menu_desc">@item.Description</p>
-                    <span class="th-menu_price">$19.85</span>
-                </div>
-                <div class="fire">
-                    <img src="~/asset/img/update_2/shape/fire.png" alt="shape" />
-                </div>
-            </div>
+            </a>
         </div>
     }
 

@@ -6,6 +6,7 @@ namespace FastFoot.Web.UI.ViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
+        
             return View();
         }
     }

@@ -12,10 +12,14 @@ namespace FastFoot.Web.UI.ViewComponents
             this.db = db;
                 
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int category)
         {
-            var model=db.foods.Include(p=>p.Categories).Include(p => p.Restaurants).ToList();
 
+            var model=db.foods.Include(p=>p.Categories).Include(p => p.Restaurants).ToList();
+            if (category > 0 )
+            {
+                model = model.Where(p => p.CategoriesId == category).ToList();
+            }
             return View(model);
         }
     }

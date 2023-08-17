@@ -410,7 +410,7 @@
       gallery: { enabled: !0 },
     }),
     e(".popup-video").magnificPopup({ type: "iframe" }),
-    e(".popup-content").magnificPopup({ type: "inline", midClick: !0 }),
+    e(").magnificPopup({ type: "inline", midClick: !0 }),
     (e.fn.sectionPosition = function (t, a) {
       e(this).each(function () {
         var s,

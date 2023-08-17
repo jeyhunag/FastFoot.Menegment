@@ -1,4 +1,5 @@
-﻿<div class="space">
+﻿@model IEnumerable<Categories>
+<div class="space">
     <div class="shape-mockup jump d-none d-lg-block"
          data-top="15%"
          data-left="5%">
@@ -21,90 +22,24 @@
              data-md-slide-show="3"
              data-sm-slide-show="2"
              data-xs-slide-show="2">
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_1.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">24% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Big Size Pizza</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_2.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">20% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Fresh Sea Food</a>
-                        </h3>
+             @foreach (var item in Model)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="category-grid">
+                        <div class="category-grid_img">
+                            <img src="~/@item.ImagePath"
+                                 alt="icon" />
+                        </div>
+                        <div class="category-grid_content">
+                            <h3 class="category-grid_title">
+                                <a asp-controller="Shops" asp-action="Index" asp-route-category="@item.Id">@item.Name</a>
+                            </h3>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_3.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">22% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Chicken Burger</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_4.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">30% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Chicken Fry</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_5.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">24% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Tomatoo Pasta</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="category-grid">
-                    <div class="category-grid_img">
-                        <img src="~/asset/img/update_2/normal/category_5_6.jpg"
-                             alt="icon" />
-                    </div>
-                    <div class="category-grid_content">
-                        <span class="category-grid_tag">32% OFF</span>
-                        <h3 class="category-grid_title">
-                            <a href="shop.html">Chicken Ball</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
+            }
+         
+
         </div>
     </div>
 </div>

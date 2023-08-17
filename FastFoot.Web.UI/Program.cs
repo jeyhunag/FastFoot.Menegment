@@ -1,4 +1,6 @@
+using FastFood.DAL.Data;
 using FastFood.DAL.DbModel;
+using FastFoot.Web.UI.HelperExtensions.IdentityExtensions;
 using FastFoot.Web.UI.Provider;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,8 +24,12 @@ namespace FastFoot.Web.UI
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
+            //Identity AppRole,AppUser Security 
+            builder.Services.AddIdentityServices();
+
             var app = builder.Build();
 
+        
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -36,6 +42,7 @@ namespace FastFoot.Web.UI
             app.UseStaticFiles();
 
             app.UseRouting();
+
 
             app.UseAuthorization();
             app.MapAreaControllerRoute("FoltAdminArea",

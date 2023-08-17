@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        @await Component.InvokeAsync("FoodsMenu")
+        @await Component.InvokeAsync("FoodsMenu", new {category = ViewBag.Category})
         <div class="th-pagination text-center pt-50">
             <ul>
                 <li><a href="blog.html">1</a></li>
@@ -46,4 +46,4 @@
         </div>
     </div>
 </section>
-@await Component.InvokeAsync("FoodsCarusel")
+
