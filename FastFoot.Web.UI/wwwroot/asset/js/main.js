@@ -407,10 +407,12 @@
     })(".sidemenu-wrapper", ".sideMenuToggler", ".sideMenuCls", "show"),
     e(".popup-image").magnificPopup({
       type: "image",
+      mainClass: "mfp-zoom-in",
+      removalDelay: 260,
       gallery: { enabled: !0 },
     }),
     e(".popup-video").magnificPopup({ type: "iframe" }),
-    e(").magnificPopup({ type: "inline", midClick: !0 }),
+    e(".popup-content").magnificPopup({ type: "inline", midClick: !0 }),
     (e.fn.sectionPosition = function (t, a) {
       e(this).each(function () {
         var s,

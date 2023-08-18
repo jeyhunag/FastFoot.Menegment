@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Edit";
 }
-@*@section css{
+@section css{
     <link href="~/assets/multiple-image-input/imager.css" rel="stylesheet"   />
-}*@
+}
 <div class="main-content">
 
     <div class="page-content">
@@ -25,10 +25,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+
                             <form asp-action="Edit" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-md-12" style="display: inline-block;">
                                         <div style="width: 600px;" class="imager-container" id="viewer1" name="files">
+                                            @foreach (var img in Model.RestaurantsImages)
+                                            {
+                                                <label thumb-url="/img/@img.ImagePath" image-id="@img.Id" @(img.IsMain == true ? "checked" : "")></label>
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -100,7 +105,7 @@
 </div>
 
 
-@*@section Scripts{
+@section Scripts{
     <script src="~/assets/multiple-image-input/jquery.image-input.js"></script>
     <script src="~/assets/multiple-image-input/imager.js"></script>
     <script>
@@ -112,4 +117,4 @@
             plusBtnClass: undefined
         });
     </script>
-}*@
+}

@@ -14,6 +14,8 @@ namespace FastFood.DAL.Data
         public string UserName { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public string? Fincode { get; set; }
+        public string? WhatsappNumber { get; set; }
         public string Email { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }

@@ -95,7 +95,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
             //if (ModelState.IsValid)
             //{
-            //    _db.Update(campaign);
+               _db.Update(campaign);
 
                 await _db.SaveChangesAsync();
 
