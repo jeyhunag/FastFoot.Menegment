@@ -1,12 +1,13 @@
-﻿@model List<Categories>
+﻿@model List<Services>
 @{
     ViewData["Title"] = "Index";
 }
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-10" style="margin-left:17%;">
             <div class="card mt-5">
-                <h1 class="mt-5 m-auto">Categories</h1>
+                <h1 class="mt-5 m-auto">Services</h1>
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-4">
@@ -19,7 +20,7 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a asp-action="Create" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add New Order</a>
+                                <a asp-action="Create" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add New Services</a>
                             </div>
                         </div><!-- end col-->
                     </div>
@@ -34,7 +35,7 @@
                                             <label class="form-check-label" for="checkAll"></label>
                                         </div>
                                     </th>
-                                    <th class="align-middle">Image</th>
+                                    <th class="align-middle">Icon</th>
                                     <th class="align-middle">ID</th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Description</th>
@@ -53,7 +54,7 @@
                                                 <label class="form-check-label" for="orderidcheck01"></label>
                                             </div>
                                         </td>
-                                        <td><img src="~/@item.ImagePath" alt="image" class="avatar-sm"></td>
+                                        <td><img src="~/@item.Icon" alt="image" class="avatar-sm"></td>
                                         <td>@item.Id</td>
                                         <td>@item.Name</td>
                                         <td>
@@ -93,3 +94,4 @@
     </div>
     <!-- end row -->
 </div>
+
