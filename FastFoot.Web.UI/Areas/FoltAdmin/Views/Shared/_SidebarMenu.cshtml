@@ -7,7 +7,18 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">Menu</li>
-
+                <li>
+                    <a asp-area="FoltAdmin" asp-controller="UserManagment" asp-action="UserIndex" class="waves-effect">
+                        <i class="bx bx-buildings"></i>
+                        <span key="t-chat">User Managment</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="FoltAdmin" asp-controller="UserManagment" asp-action="RoleIndex" class="waves-effect">
+                        <i class="bx bx-buildings"></i>
+                        <span key="t-chat">Role</span>
+                    </a>
+                </li>
                 <li>
                     <a asp-area="FoltAdmin" asp-controller="Cities" asp-action="Index" class="waves-effect">
                         <i class="bx bx-buildings"></i>

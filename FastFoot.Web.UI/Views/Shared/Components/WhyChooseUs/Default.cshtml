@@ -1,4 +1,6 @@
-﻿<section class="space">
+﻿@model IEnumerable<Services>
+
+<section class="space">
     <div class="shape-mockup moving d-none d-lg-block"
          data-top="10%"
          data-left="3%">
@@ -26,45 +28,21 @@
             </div>
             <div class="col-xl-8 mt-40 mt-xl-0">
                 <div class="row gy-4 justify-content-center">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="why-feature">
-                            <div class="why-feature_icon">
-                                <img src="~/asset/img/update_2/icon/why_feature_1.svg"
-                                     alt="icon" />
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="why-feature">
+                                <div class="why-feature_icon">
+                                    <img src="~/@item.Icon"
+                                         alt="icon" />
+                                </div>
+                                <h3 class="why-feature_title">@item.Name</h3>
+                                <p class="why-feature_text">
+                                    @item.Description
+                                </p>
                             </div>
-                            <h3 class="why-feature_title">Quality Foods</h3>
-                            <p class="why-feature_text">
-                                Praesent rutrum ligula ligula, eget viverra neque congue
-                                sed. Donec
-                            </p>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="why-feature">
-                            <div class="why-feature_icon">
-                                <img src="~/asset/img/update_2/icon/why_feature_2.svg"
-                                     alt="icon" />
-                            </div>
-                            <h3 class="why-feature_title">Table reservation</h3>
-                            <p class="why-feature_text">
-                                Guarantee your spot, and enjoy a hassle-free dining
-                                Experience with our
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="why-feature">
-                            <div class="why-feature_icon">
-                                <img src="~/asset/img/update_2/icon/why_feature_3.svg"
-                                     alt="icon" />
-                            </div>
-                            <h3 class="why-feature_title">Online Order</h3>
-                            <p class="why-feature_text">
-                                Order online and savor the Delicious flavors from the
-                                Comfort of home
-                            </p>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

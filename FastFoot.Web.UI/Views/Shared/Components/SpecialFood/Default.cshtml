@@ -1,6 +1,6 @@
 ﻿@* @model CampaignBannerViewModel
 
-@if (Model?.Banners?.Count() > 0 && Model?.Campaigns?.Count() > 0)
+@if (Model.Banners.Count() > 0 && Model.Campaigns.Count() > 0)
 {
     <div class="d-none d-md-block">
         @foreach (var item in Model.Campaigns)
@@ -927,7 +927,7 @@
         </div>
     }
 
-}
+} *@
 
 
- *@
+ 

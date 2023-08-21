@@ -1,7 +1,109 @@
-﻿
+﻿@model AppUser
 @{
     ViewData["Title"] = "UserCreate";
 }
+<div class="main-content">
 
-<h1>UserCreate</h1>
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h2 class=" m-auto">Add User</h2>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="UserCreate" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Name">Name</label>
+                                            <input asp-for="Name" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Surname">Surname</label>
+                                            <input asp-for="Surname" class="form-control" placeholder="Surname">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="UserName">User Name</label>
+                                            <input asp-for="UserName" class="form-control" placeholder="User Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Fincode">Fin Code</label>
+                                            <input asp-for="Fincode" class="form-control" placeholder="Fin Code">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="WhatsappNumber">Whatsapp Number</label>
+                                            <input type="number" asp-for="WhatsappNumber" class="form-control" placeholder="Whatsapp Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Email">Email</label>
+                                            <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="DateOfBirth">DateOfBirth</label>
+                                            <input asp-for="DateOfBirth" type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Gender">Gender</label>
+                                            <input asp-for="Gender" class="form-control" placeholder="Gender">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Country">Country</label>
+                                            <input asp-for="Country" class="form-control" placeholder="Country">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="PasswordHash">Password</label>
+                                            <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label asp-for="Img">Image</label>
+                                            <input asp-for="Img" type="file" name="imageFile" class="form-control" placeholder="Image">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save Changes</button>
+                                    <a asp-action="UserIndex" class="btn btn-secondary waves-effect waves-light">Back to List</a>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
