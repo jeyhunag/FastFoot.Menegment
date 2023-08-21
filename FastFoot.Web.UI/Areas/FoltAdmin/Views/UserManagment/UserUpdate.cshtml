@@ -1,4 +1,4 @@
-﻿@model AppUser
+﻿@model UserViewModel
 @{
     ViewData["Title"] = "UserUpdate";
 }
@@ -82,8 +82,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3">
-                                            <label asp-for="PasswordHash">Password</label>
-                                            <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Password">
+                                            <label asp-for="Password">Password</label>
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="Password">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">

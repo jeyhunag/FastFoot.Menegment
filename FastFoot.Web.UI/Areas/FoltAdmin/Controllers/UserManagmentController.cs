@@ -1,4 +1,5 @@
 ﻿using FastFood.DAL.Data;
+using FastFoot.Web.UI.Areas.FoltAdmin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,15 +27,15 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
         #region UserOperation
 
-        public IActionResult UserIndex()
+        public IActionResult UserIndex( )
         {
 
-            List<AppUser> viewModels = new List<AppUser>();
+            List<UserViewModel> viewModels = new List<UserViewModel>();
 
             List<AppUser> appUsers = _userManager.Users.ToList();
             foreach (var item in appUsers)
             {
-                AppUser viewModel = new AppUser
+                UserViewModel viewModel = new UserViewModel
                 {
                     Id = item.Id,
                     Name = item.Name,
@@ -65,10 +66,10 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UserCreate(AppUser viewModel, IFormFile imageFile)
+        public async Task<IActionResult> UserCreate(UserViewModel viewModel, IFormFile imageFile)
         {
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -95,9 +96,12 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                     Email = viewModel.Email,
                     Gender = viewModel.Gender,
                 };
-                IdentityResult result = await _userManager.CreateAsync(user, viewModel.PasswordHash);
+                IdentityResult result = await _userManager.CreateAsync(user, viewModel.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserIndex");
+                }
 
-                return RedirectToAction("UserIndex");
             }
             return View(viewModel);
 
@@ -113,7 +117,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                 return NotFound();
             }
 
-            AppUser viewModel = new AppUser
+            UserViewModel viewModel = new UserViewModel
             {
                 Id = user.Id,
                 Name = user.Name,
@@ -131,45 +135,49 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> UserUpdate(AppUser viewModel, IFormFile imageFile)
+        public async Task<IActionResult> UserUpdate(UserViewModel viewModel, IFormFile imageFile)
         {
 
-            //if (ModelState.IsValid)
-            //{
-            if (imageFile != null && imageFile.Length > 0)
+            if (ModelState.IsValid)
             {
-                var imagePath = _imgPath + imageFile.FileName;
-                var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                if (imageFile != null && imageFile.Length > 0)
                 {
-                    await imageFile.CopyToAsync(stream);
-                    viewModel.Img = imagePath;
+                    var imagePath = _imgPath + imageFile.FileName;
+                    var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                        viewModel.Img = imagePath;
+                    }
+                }
+
+                AppUser user = await _userManager.FindByIdAsync(viewModel.Id);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.Name = viewModel.Name;
+                user.Surname = viewModel.Surname;
+                user.Country = viewModel.Country;
+                user.WhatsappNumber = viewModel.WhatsappNumber;
+                user.Fincode = viewModel.Fincode;
+                user.Img = viewModel.Img;
+                user.DateOfBirth = viewModel.DateOfBirth;
+                user.Email = viewModel.Email;
+                user.UserName = viewModel.UserName;
+                user.Gender = viewModel.Gender;
+
+                IdentityResult result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserIndex");
                 }
             }
-
-            AppUser user = await _userManager.FindByIdAsync(viewModel.Id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            user.Name = viewModel.Name;
-            user.Surname = viewModel.Surname;
-            user.Country = viewModel.Country;
-            user.WhatsappNumber = viewModel.WhatsappNumber;
-            user.Fincode = viewModel.Fincode;
-            user.Img = viewModel.Img;
-            user.DateOfBirth = viewModel.DateOfBirth;
-            user.Email = viewModel.Email;
-            user.UserName = viewModel.UserName;
-            user.Gender = viewModel.Gender;
-
-            IdentityResult result = await _userManager.UpdateAsync(user);
-
-            return RedirectToAction("UserIndex");
-            //}
 
             return View(viewModel);
         }
@@ -181,7 +189,10 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
             if (user != null)
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
-
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserIndex");
+                }
             }
             return RedirectToAction("UserIndex");
         }
@@ -210,20 +221,19 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         public IActionResult RoleIndex()
         {
 
-            List<AppRole> viewModels = new List<AppRole>();
+            List<RoleViewModel> viewModels = new List<RoleViewModel>();
 
             List<AppRole> appRoles = _roleManager.Roles.ToList();
-
             foreach (var item in appRoles)
             {
-                AppRole viewModel = new AppRole
+                RoleViewModel viewModel = new RoleViewModel
                 {
                     Id = item.Id,
                     Name = item.Name
+
                 };
                 viewModels.Add(viewModel);
             }
-
 
             return View(viewModels);
         }
@@ -238,20 +248,67 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RoleCreate(AppRole viewModel)
+        public async Task<IActionResult> RoleCreate(RoleViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            AppRole role = new AppRole()
             {
-                AppRole role = new AppRole()
-                {
-                    Name = viewModel.Name
-                };
-                IdentityResult result = await _roleManager.CreateAsync(role);
-
+                Name = viewModel.Name
+            };
+            IdentityResult result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
                 return RedirectToAction("RoleIndex");
-
-
             }
+
+            //}
+            return View(viewModel);
+
+        }
+
+
+        public async Task<IActionResult> RoleAssign(string Id)
+        {
+            AppUser user = await _userManager.FindByIdAsync(Id);
+
+            UserRoleViewModel viewModel = new UserRoleViewModel()
+            {
+                UserFullName = user.Name + " " + user.Surname,
+                UserId = user.Id
+            };
+            List<AppRole> roles = _roleManager.Roles.ToList();
+
+            List<RoleViewModel> roleViewModels = new List<RoleViewModel>();
+            foreach (var item in roles)
+            {
+                RoleViewModel roleView = new RoleViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                };
+                roleViewModels.Add(roleView);
+            }
+            viewModel.Roles = roleViewModels;
+            return View(viewModel);
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RoleAssign(UserRoleViewModel viewModel)
+        {
+            AppUser user = await _userManager.FindByIdAsync(viewModel.UserId);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.AddToRoleAsync(user, viewModel.RoleName);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserIndex");
+                }
+            }
+
+
             return View(viewModel);
 
         }
@@ -265,7 +322,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                 return NotFound();
             }
 
-            AppRole viewModel = new AppRole
+            RoleViewModel viewModel = new RoleViewModel
             {
                 Id = role.Id,
                 Name = role.Name
@@ -276,12 +333,12 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RoleUpdate(AppRole viewModel)
+        public async Task<IActionResult> RoleUpdate(RoleViewModel viewModel)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(viewModel);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
 
             AppRole role = await _roleManager.FindByIdAsync(viewModel.Id);
             if (role == null)
@@ -292,9 +349,10 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
             role.Name = viewModel.Name;
             IdentityResult result = await _roleManager.UpdateAsync(role);
 
-
-            return RedirectToAction("RoleIndex");
-
+            if (result.Succeeded)
+            {
+                return RedirectToAction("RoleIndex");
+            }
 
             foreach (IdentityError error in result.Errors)
             {
@@ -308,15 +366,21 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         [HttpGet]
         public async Task<IActionResult> RoleDelete(string id)
         {
-
             AppRole role = await _roleManager.FindByIdAsync(id);
-            if (role != null)
+            if (role == null)
             {
-                IdentityResult result = await _roleManager.DeleteAsync(role);
+                return NotFound();
             }
 
-            return RedirectToAction("RoleIndex");
-
+            IdentityResult result = await _roleManager.DeleteAsync(role);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("RoleIndex");
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
         #endregion
     }

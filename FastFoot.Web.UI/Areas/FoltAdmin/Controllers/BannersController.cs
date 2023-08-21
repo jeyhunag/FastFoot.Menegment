@@ -1,6 +1,7 @@
 ﻿using FastFood.DAL.Data;
 using FastFood.DAL.DbModel;
 using FastFoot.Web.UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging.Signing;
@@ -8,6 +9,7 @@ using NuGet.Packaging.Signing;
 namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
 {
     [Area("FoltAdmin")]
+    //[Authorize(Roles = "Admin")]
     public class BannersController : Controller
     {
         private readonly AppDbContext _db;
