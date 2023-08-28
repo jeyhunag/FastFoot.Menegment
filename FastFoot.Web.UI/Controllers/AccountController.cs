@@ -3,19 +3,25 @@ using FastFoot.Web.UI.Areas.Controllers;
 using FastFoot.Web.UI.Areas.FoltAdmin.ViewModels;
 using FastFoot.Web.UI.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FastFoot.Web.UI.Controllers
 {
+   
     public class AccountController : Controller
     {
         private UserManager<AppUser> _userManager;
         private SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly string _imgPath = @"img/";
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+               IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -75,6 +81,120 @@ namespace FastFoot.Web.UI.Controllers
             return View(homeViewModel);
         }
 
+        public async Task<IActionResult> ProfileSettings(string id)
+        {
+
+            AppUser user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            ProfileViewModel viewModel = new ProfileViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                WhatsappNumber = user.WhatsappNumber,
+                Fincode = user.Fincode,
+                Surname = user.Surname,
+                Country = user.Country,
+                Img = user.Img,
+                DateOfBirth = user.DateOfBirth,
+                Email = user.Email,
+                UserName = user.UserName,
+                Gender = user.Gender,
+            };
+
+            HomeViewModel homeViewModel = new HomeViewModel
+            {
+                ProfileViewModel = viewModel
+            };
+            return View(homeViewModel);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, ProfileViewModel viewModel, IFormFile imageFile)
+        {
+            viewModel = homeViewModel.ProfileViewModel;
+            //if (ModelState.IsValid)
+            //{
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var imagePath = _imgPath + imageFile.FileName;
+                var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                    viewModel.Img = imagePath;
+                }
+            }
+
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                // Update user properties
+                user.Name = viewModel.Name;
+                user.Fincode = viewModel.Fincode;
+                user.WhatsappNumber = viewModel.WhatsappNumber;
+                user.Surname = viewModel.Surname;
+                user.Country = viewModel.Country;
+                user.Img = viewModel.Img;
+                user.DateOfBirth = viewModel.DateOfBirth;
+                user.Email = viewModel.Email;
+                user.UserName = viewModel.UserName;
+                user.Gender = viewModel.Gender;
+
+
+
+                if (!string.IsNullOrEmpty(viewModel.NewPassword))
+                {
+                    // Check if the current password is correct
+                    if (await _userManager.CheckPasswordAsync(user, viewModel.Password))
+                    {
+                        // Update the password
+                        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                        var result = await _userManager.ResetPasswordAsync(user, token, viewModel.NewPassword);
+
+                        if (!result.Succeeded)
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                            return View(viewModel);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Incorrect current password.");
+                        return View(viewModel);
+                    }
+                }
+
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    foreach (var error in updateResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(viewModel);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "User not found.");
+            }
+            //}
+
+            return View(homeViewModel);
+        }
 
         [AllowAnonymous]
         public async Task<IActionResult> Logout()

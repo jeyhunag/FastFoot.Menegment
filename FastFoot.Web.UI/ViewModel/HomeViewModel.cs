@@ -4,5 +4,6 @@
     {
         public SignInViewModel? SignInViewModel { get; set; }
         public SignUpViewModel? SignUpViewModel { get; set; }
+        public ProfileViewModel? ProfileViewModel { get; set; }
     }
 }

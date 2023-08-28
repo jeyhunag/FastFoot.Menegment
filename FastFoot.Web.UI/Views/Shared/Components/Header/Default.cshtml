@@ -1,4 +1,6 @@
-﻿<div class="preloader">
+﻿
+
+<div class="preloader">
     <button class="th-btn style3 preloaderCls">Cancel Preloader</button>
     <div class="preloader-inner"><span class="loader"></span></div>
 </div>
@@ -132,7 +134,7 @@
                 <li class="menu-item-has-children">
                     <a href="#">Menu</a>
                     <ul class="sub-menu">
-                        <li><a asp-area=" " asp-controller="FastFoods" asp-action="Index">Fast Food Menu</a></li>
+                        <li><a asp-area="" asp-controller="FastFoods" asp-action="Index">Fast Food Menu</a></li>
                         <li><a href="menu-rest.html">Restaurant Food Menu</a></li>
                     </ul>
                 </li>
@@ -210,7 +212,7 @@
                     <div class="header-links">
                         <ul>
                             <li>
-                                <i class="far fa-envelope"></i><a href="mailto:needhelp.pizzan@gmail.com">needhelp.pizzan@gmail.com</a>
+                                <i class="far fa-envelope"></i><a>needhelp.pizzan@gmail.com</a>
                             </li>
                             <li>
                                 <i class="far fa-location-dot"></i>Rd. Allentown, New Mexico
@@ -222,7 +224,18 @@
                 <div class="col-auto">
                     <div class="header-links">
                         <ul>
-                            <li><i class="far fa-user"></i>Login/Register</li>
+                            <li>
+                                <i class="far fa-user"></i>
+                                <a  asp-controller="Account" asp-action="SignIn">
+                                    Login
+                                </a>
+                            </li>
+                            <li>
+                                <i class="far fa-user"></i>
+                                <a  asp-controller="Account" asp-action="SignUp">
+                                    Register
+                                </a>
+                            </li>
                             <li>
                                 <div class="header-social">
                                     <a href="https://www.facebook.com/">
