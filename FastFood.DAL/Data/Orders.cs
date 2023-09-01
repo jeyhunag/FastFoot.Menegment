@@ -14,6 +14,7 @@ namespace FastFood.DAL.Data
         public string Bina { get; set; }
         public string Number { get; set; }
         public string MenzilNo { get; set; }
+        public string TotalPrice { get; set; }
         public string Email { get; set; }
         public int RestaurantsId { get; set; }
         public Restaurants Restaurants { get; set; }

@@ -48,6 +48,8 @@ namespace FastFoot.Web.UI
             app.MapAreaControllerRoute("FoltAdminArea",
             areaName: "FoltAdmin",
             pattern: "Foltadmin/{controller=Home}/{action=index}/{id?}");
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Homes}/{action=Index}/{id?}");

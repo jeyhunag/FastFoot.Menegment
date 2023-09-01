@@ -1,19 +1,16 @@
 ﻿using FastFood.DAL.Data;
 using FastFoot.Web.UI.Areas.Controllers;
-using FastFoot.Web.UI.Areas.FoltAdmin.ViewModels;
 using FastFoot.Web.UI.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FastFoot.Web.UI.Controllers
 {
-   
     public class AccountController : Controller
     {
-        private UserManager<AppUser> _userManager;
-        private SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly string _imgPath = @"img/";
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
@@ -23,7 +20,10 @@ namespace FastFoot.Web.UI.Controllers
             _signInManager = signInManager;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        public async Task<IActionResult> SignIn()
+        {
+            return View();
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -46,14 +46,19 @@ namespace FastFoot.Web.UI.Controllers
             {
                 string? redirect = Request.Query["returnUrl"];
                 if (string.IsNullOrWhiteSpace(redirect))
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Homes");
             }
             else
             {
                 ModelState.AddModelError("", "Invalid username or password");
 
             }
-            return RedirectToAction("Index", "Home", homeViewModel);
+            return RedirectToAction("Index", "Homes", homeViewModel);
+        }
+
+        public async Task<IActionResult> SignUp()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -61,8 +66,7 @@ namespace FastFoot.Web.UI.Controllers
         {
             model = homeViewModel.SignUpViewModel;
 
-            //if (ModelState.IsValid)
-            //{
+        
             AppUser user = new AppUser { UserName = model.UserName, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -70,13 +74,13 @@ namespace FastFoot.Web.UI.Controllers
 
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Homes");
             }
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
-            //}
+          
 
             return View(homeViewModel);
         }
@@ -119,8 +123,7 @@ namespace FastFoot.Web.UI.Controllers
         public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, ProfileViewModel viewModel, IFormFile imageFile)
         {
             viewModel = homeViewModel.ProfileViewModel;
-            //if (ModelState.IsValid)
-            //{
+
             if (imageFile != null && imageFile.Length > 0)
             {
                 var imagePath = _imgPath + imageFile.FileName;
@@ -185,13 +188,12 @@ namespace FastFoot.Web.UI.Controllers
                     return View(viewModel);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Homes");
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "User not found.");
             }
-            //}
 
             return View(homeViewModel);
         }
@@ -200,7 +202,7 @@ namespace FastFoot.Web.UI.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Homes");
         }
     }
 }
