@@ -4,3 +4,15 @@
 }
 
 
+@if (!string.IsNullOrWhiteSpace(ViewBag.role) && ViewBag.role == "Restaurants")
+{
+    <h1>Restaurants</h1>
+}
+else if (!string.IsNullOrWhiteSpace(ViewBag.role) && ViewBag.role == "Kuryer")
+{
+    <h1>Kuryer</h1>
+}
+else
+{
+    <h1>User</h1>
+}

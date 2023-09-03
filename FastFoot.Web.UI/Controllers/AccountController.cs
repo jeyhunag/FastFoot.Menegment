@@ -22,6 +22,7 @@ namespace FastFoot.Web.UI.Controllers
         }
         public async Task<IActionResult> SignIn()
         {
+       
             return View();
         }
 
@@ -46,7 +47,9 @@ namespace FastFoot.Web.UI.Controllers
             {
                 string? redirect = Request.Query["returnUrl"];
                 if (string.IsNullOrWhiteSpace(redirect))
-                    return RedirectToAction("Index", "Homes");
+                return RedirectToAction("Index", "Homes");
+
+             
             }
             else
             {
@@ -87,9 +90,33 @@ namespace FastFoot.Web.UI.Controllers
 
         public async Task<IActionResult> ProfileSettings(string id)
         {
-
+            var roleName = "";
             AppUser user = await _userManager.FindByIdAsync(id);
 
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (users != null)
+            {
+                // Check if the user has any roles
+                var roles = await _userManager.GetRolesAsync(users);
+                if (roles.Count()>0)
+                {
+                    roleName = roles.FirstOrDefault(); 
+                }
+                if (roles.Any())
+                {
+                    // For simplicity, assume the user has only one role
+                    var roleId = await _userManager.GetRolesAsync(users);
+
+                    
+                }
+                else
+                {
+                    // Handle the case where the user doesn't have any roles
+                    // ...
+                }
+            }
+            ViewBag.role = roleName;
             if (user == null)
             {
                 return NotFound();

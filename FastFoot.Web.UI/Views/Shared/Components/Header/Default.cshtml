@@ -1,5 +1,5 @@
-﻿@using System.Security.Claims;
-@inject UserManager<AppUser> UserManager
+﻿@inject UserManager<AppUser> UserManager
+@inject RoleManager<AppRole> RoleManager
 
 <div class="preloader">
     <button class="th-btn style3 preloaderCls">Cancel Preloader</button>
@@ -123,7 +123,7 @@
         <div class="th-mobile-menu">
             <ul>
                 <li class="menu-item-has-children">
-                    <a href="index.html">Home</a>
+                    <a>Home</a>
                     <ul class="sub-menu">
 
                         <li><a asp-area="" asp-controller="HomeRestaurants" asp-action="Index">Restaurant Home</a></li>
@@ -227,22 +227,22 @@
                 <div class="col-auto">
                     <div class="header-links">
                         <ul>
-
-
+                     
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li>
-                                    <i class="far fa-user"></i>
-                                    <a asp-controller="Account" asp-action="ProfileSettings" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
-                                        Profile Settings
-                                    </a>
-                                </li>
-                                <li>
-                                    <i class="far fa-user"></i>
-                                    <a asp-controller="Account" asp-action="Logout">
-                                        Log Out
-                                    </a>
-                                </li>
+
+                                    <li>
+                                        <i class="far fa-user"></i>
+                                        <a asp-controller="Account" asp-action="ProfileSettings" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+                                            Profile Settings 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-user"></i>
+                                        <a asp-controller="Account" asp-action="Logout">
+                                            Log Out
+                                        </a>
+                                    </li>
                             }
                             else
                             {
@@ -296,25 +296,22 @@
                         <nav class="main-menu d-none d-lg-inline-block">
                             <ul>
                                 <li class="menu-item-has-children">
-                                    <a href="index.html">Home</a>
+                                    <a>Home</a>
                                     <ul class="sub-menu">
                                         <li>
-                                            <a href="home-restaurant.html">Restaurant Home</a>
+                                            <a asp-controller="HomeRestaurants" asp-action="index">Restaurant Home</a>
                                         </li>
                                         <li>
-                                            <a href="home-fast-food-rastaurant.html">Fast Food Restaurant</a>
-                                        </li>
-                                        <li>
-                                            <a href="home-fast-food.html">Fast Food Home</a>
+                                            <a asp-controller="FastFoods" asp-action="index">Fast Food</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Menu</a>
                                     <ul class="sub-menu">
-                                        <li><a href="menu-fast.html">Fast Food Menu</a></li>
+                                        <li><a asp-controller="FastFoods" asp-action="index">Fast Food Menu</a></li>
                                         <li>
-                                            <a href="menu-rest.html">Restaurant Food Menu</a>
+                                            <a asp-controller="HomeRestaurants" asp-action="index">Restaurant Food Menu</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -322,7 +319,7 @@
                                     <a href="#">Shop</a>
                                     <ul class="sub-menu">
                                         <li><a asp-controller="shops" asp-action="index">Shop</a></li>
-                                        <li><a href="shop-details.html">Shop Details</a></li>
+                                        <li><a asp-controller="ShopDetails" asp-action="index">Shop Details</a></li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children mega-menu-wrap">
@@ -331,54 +328,27 @@
                                         <li>
                                             <a asp-controller="shops" asp-action="index">Pagelist 1</a>
                                             <ul>
-                                                <li>
-                                                    <a href="home-restaurant.html">Restaurant Home</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home-fast-food-rastaurant.html">Fast Food Restaurant</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home-fast-food.html">Fast Food Home</a>
-                                                </li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="reservation.html">Reservation</a></li>
+                                                <li><a asp-controller="About" asp-action="index">About Us</a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#">Pagelist 2</a>
                                             <ul>
-                                                <li><a href="menu-fast.html">Fast Food Menu</a></li>
-                                                <li>
-                                                    <a href="menu-rest.html">Restaurant Food Menu</a>
-                                                </li>
-                                                <li><a href="team.html">Our Chef</a></li>
-                                                <li>
-                                                    <a href="team-details.html">Chef Details</a>
-                                                </li>
-                                                <li><a href="faq.html">Faq Page</a></li>
+                                                <li><a asp-controller="Faq" asp-action="Index">Faq Page</a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#">Pagelist 3</a>
                                             <ul>
-                                                <li><a asp-controller="shops" asp-action="index">Shop</a></li>
+                                                <li><a asp-controller="Shops" asp-action="Index">Shops</a></li>
                                                 <li>
-                                                    <a href="shop-details.html">Shop Details</a>
+                                                    <a asp-controller="ShopDetails" asp-action="Index">Shop Details</a>
                                                 </li>
-                                                <li><a href="cart.html">Cart Page</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="wishlist.html">Wishlist</a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#">Pagelist 4</a>
                                             <ul>
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li>
-                                                    <a href="blog-details.html">Blog Details</a>
-                                                </li>
-                                                <li><a href="testimonial.html">Testimonial</a></li>
-                                                <li><a href="contact.html">Contact Us</a></li>
                                                 <li><a href="error.html">Error Page</a></li>
                                             </ul>
                                         </li>
@@ -391,7 +361,7 @@
                                         <li><a href="blog-details.html">News Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a asp-controller="Contact" asp-action="Create">Contact Us</a></li>
                             </ul>
                         </nav>
                     </div>
