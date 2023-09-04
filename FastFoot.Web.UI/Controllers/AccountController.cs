@@ -117,6 +117,7 @@ namespace FastFoot.Web.UI.Controllers
                 }
             }
             ViewBag.role = roleName;
+            ViewBag.Id = id;
             if (user == null)
             {
                 return NotFound();
@@ -141,15 +142,16 @@ namespace FastFoot.Web.UI.Controllers
             {
                 ProfileViewModel = viewModel
             };
+
             return View(homeViewModel);
         }
 
 
 
         [HttpPost]
-        public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, ProfileViewModel viewModel, IFormFile imageFile)
+        public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, UserRestaurantsViewModel userRestaurantsViewModel, IFormFile imageFile)
         {
-            viewModel = homeViewModel.ProfileViewModel;
+            var viewModel = userRestaurantsViewModel.Profile;
 
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -164,6 +166,7 @@ namespace FastFoot.Web.UI.Controllers
 
 
             var user = await _userManager.GetUserAsync(User);
+            ViewBag.Id = user.Id;
             if (user != null)
             {
                 // Update user properties
@@ -222,7 +225,8 @@ namespace FastFoot.Web.UI.Controllers
                 ModelState.AddModelError(string.Empty, "User not found.");
             }
 
-            return View(homeViewModel);
+            
+            return View();
         }
 
         [AllowAnonymous]

@@ -1,4 +1,4 @@
-﻿@model FastFoot.Web.UI.ViewModel.HomeViewModel
+﻿
 @{
     ViewData["Title"] = "ProfileSettings";
 }
@@ -6,13 +6,13 @@
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.role) && ViewBag.role == "Restaurants")
 {
-    <h1>Restaurants</h1>
+    @await Component.InvokeAsync("UserRestaurants", new {id=ViewBag.Id} )
 }
 else if (!string.IsNullOrWhiteSpace(ViewBag.role) && ViewBag.role == "Kuryer")
 {
-    <h1>Kuryer</h1>
+    @await Component.InvokeAsync("UserCourier", new {id=ViewBag.Id})
 }
 else
 {
-    <h1>User</h1>
+    @await Component.InvokeAsync("User", new {id=ViewBag.Id})
 }

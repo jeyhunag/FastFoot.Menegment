@@ -1,4 +1,6 @@
-﻿namespace FastFoot.Web.UI.ViewModel
+﻿using FastFood.DAL.Data;
+
+namespace FastFoot.Web.UI.ViewModel
 {
     public class ProfileViewModel
     {
@@ -15,5 +17,6 @@
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public string? Country { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

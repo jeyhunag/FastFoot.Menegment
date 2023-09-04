@@ -23,6 +23,8 @@ namespace FastFood.DAL.Data
         public string? MenzilNo { get; set; }
         public int CitiesId { get; set; }
         public Cities Cities { get; set; }
+        public string? UserId { get; set; }
+        public AppUser? User { get; set; }
         public string? QR { get; set; }
         public virtual ICollection<Foods>? foods { get; set; }
         public virtual ICollection<Orders>? Orders { get; set; }

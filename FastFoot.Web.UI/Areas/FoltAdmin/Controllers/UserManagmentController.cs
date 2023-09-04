@@ -69,7 +69,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         public async Task<IActionResult> UserCreate(UserViewModel viewModel, IFormFile imageFile)
         {
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 if (imageFile != null && imageFile.Length > 0)
