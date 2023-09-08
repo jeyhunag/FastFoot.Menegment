@@ -149,9 +149,9 @@ namespace FastFoot.Web.UI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, UserRestaurantsViewModel userRestaurantsViewModel, IFormFile imageFile)
+        public async Task<IActionResult> ProfileSettings(HomeViewModel homeViewModel, ProfileViewModel profileViewModel, IFormFile imageFile)
         {
-            var viewModel = userRestaurantsViewModel.Profile;
+            var viewModel = profileViewModel;
 
             if (imageFile != null && imageFile.Length > 0)
             {
