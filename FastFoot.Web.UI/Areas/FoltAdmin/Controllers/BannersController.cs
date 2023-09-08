@@ -3,6 +3,7 @@ using FastFood.DAL.DbModel;
 using FastFoot.Web.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging.Signing;
 
@@ -62,7 +63,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _db.Banners.AddAsync(banner);
                 await _db.SaveChangesAsync();
@@ -78,7 +79,7 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-            var banner = await _db.Banners.FindAsync(id);
+            var banner = await _db.Banners.Include(p => p.BannersImages).FirstOrDefaultAsync(p => p.Id == id);
 
             return View(banner);
         }
@@ -86,27 +87,69 @@ namespace FastFoot.Web.UI.Areas.FoltAdmin.Controllers
         // POST: BannersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( Banner banner, IFormFile imageFile)
+        public async Task<IActionResult> Edit( Banner banner)
         {
 
-            //if (imageFile != null && imageFile.Length > 0)
-            //{
-            //    var imagePath = _imgPath + imageFile.FileName;
-            //    var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
-            //    using (var stream = new FileStream(fullPath, FileMode.Create))
-            //    {
-            //        await imageFile.CopyToAsync(stream);
-            //        banner.ImagePath = imagePath;
-            //    }
-            //}
+            banner.BannersImages = new List<BannersImage>();
 
-            //if (ModelState.IsValid)
-            //{
-                _db.Update(banner);
-                await _db.SaveChangesAsync();
+            var images = _db.BannersImages.Where(pi => pi.BannerId == banner.Id).ToList();
+            foreach (var item in images)
+            {
+                if (banner.Files.Any(f => f.File == null && string.IsNullOrWhiteSpace(f.TempPath) && f.Id == item.Id))
+                {
+                    _db.BannersImages.Remove(item);
+                    ImageHelper.Delete(item.ImagePath, env);
 
-                return RedirectToAction(nameof(Index));
-            //}
+                }
+                else if (banner.Files.Any(f => f.Id == item.Id && f.IsMain))
+                {
+                    item.IsMain = true;
+
+                }
+
+                else
+                {
+                    item.IsMain = false;
+                }
+
+            }
+
+
+
+            foreach (var item in banner.Files.Where(f => f.File != null))
+            {
+                banner.BannersImages.Add(new BannersImage
+                {
+                    IsMain = item.IsMain,
+                    ImagePath = ImageHelper.Add(item.File, env)
+                });
+            }
+
+            foreach (var image in banner.BannersImages)
+            {
+                if (image.IsMain == true)
+                {
+                    banner.ImagePath = image.ImagePath;
+                }
+            }
+
+            if (banner.BannersImages.Count == 0)
+            {
+                foreach (var item in banner.Files)
+                {
+                    if (item.IsMain == true)
+                    {
+                        banner.ImagePath = item.TempPath.ToString();
+                    }
+                }
+            }
+
+            _db.Update(banner);
+
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
 
             return View(banner);
         }

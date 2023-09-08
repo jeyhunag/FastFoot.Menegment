@@ -67,7 +67,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 await _db.foods.AddAsync(foods);

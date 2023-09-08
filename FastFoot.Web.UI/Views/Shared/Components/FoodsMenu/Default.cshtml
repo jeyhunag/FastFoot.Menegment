@@ -1,4 +1,5 @@
 ﻿@model List<Foods>
+
 <div class="row gy-40">
     @foreach (var item in Model)
     {
@@ -28,6 +29,12 @@
                     </div>
                 </div>
             </a>
+                <div class="content">
+                    <h5 class="title">
+                        <a asp-controller="RestaurantDetails" asp-action="Index" asp-route-restaurantId="@item.RestaurantsId">@item.Restaurants.Name</a>
+                    </h5>
+                </div>
+                    
         </div>
     }
 

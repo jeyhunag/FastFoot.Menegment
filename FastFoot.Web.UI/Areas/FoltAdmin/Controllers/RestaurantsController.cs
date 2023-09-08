@@ -64,7 +64,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 await _db.restaurants.AddAsync(restaurants);
@@ -81,7 +81,7 @@ namespace FastFoot.Web.UI.Areas.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-            var rest = await _db.restaurants.FindAsync(id);
+            var rest = await _db.restaurants.Include(p => p.RestaurantsImages).FirstOrDefaultAsync(p => p.Id == id);
             ViewData["CitiesId"] = new SelectList(_db.cities, "Id", "Name");
             return View(rest);
         }
@@ -89,22 +89,62 @@ namespace FastFoot.Web.UI.Areas.Controllers
         // POST: CitiesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Restaurants restaurants, IFormFile imageFile)
+        public async Task<IActionResult> Edit(Restaurants restaurants)
         {
 
+            restaurants.RestaurantsImages = new List<RestaurantsImage>();
+
+            var images = _db.RestaurantsImages.Where(pi => pi.RestaurantsId == restaurants.Id).ToList();
+            foreach (var item in images)
+            {
+                if (restaurants.Files.Any(f => f.File == null && string.IsNullOrWhiteSpace(f.TempPath) && f.Id == item.Id))
+                {
+                    _db.RestaurantsImages.Remove(item);
+                    ImageHelper.Delete(item.ImagePath, env);
+
+                }
+                else if (restaurants.Files.Any(f => f.Id == item.Id && f.IsMain))
+                {
+                    item.IsMain = true;
+
+                }
+
+                else
+                {
+                    item.IsMain = false;
+                }
+
+            }
 
 
-          
-            //if (imageFile != null && imageFile.Length > 0)
-            //{
-            //    var imagePath = _imgPath + imageFile.FileName;
-            //    var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
-            //    using (var stream = new FileStream(fullPath, FileMode.Create))
-            //    {
-            //        await imageFile.CopyToAsync(stream);
-            //        restaurants.Image = imagePath;
-            //    }
-            //}
+
+            foreach (var item in restaurants.Files.Where(f => f.File != null))
+            {
+                restaurants.RestaurantsImages.Add(new RestaurantsImage
+                {
+                    IsMain = item.IsMain,
+                    ImagePath = ImageHelper.Add(item.File, env)
+                });
+            }
+
+            foreach (var image in restaurants.RestaurantsImages)
+            {
+                if (image.IsMain == true)
+                {
+                    restaurants.Image = image.ImagePath;
+                }
+            }
+
+            if (restaurants.RestaurantsImages.Count == 0)
+            {
+                foreach (var item in restaurants.Files)
+                {
+                    if (item.IsMain == true)
+                    {
+                        restaurants.Image = item.TempPath.ToString();
+                    }
+                }
+            }
             _db.Update(restaurants);
 
             await _db.SaveChangesAsync();

@@ -10,7 +10,7 @@ namespace FastFoot.Web.UI.ViewComponents
         {
                 this.db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync( )
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = db.categories.ToList();
             return View(model);
