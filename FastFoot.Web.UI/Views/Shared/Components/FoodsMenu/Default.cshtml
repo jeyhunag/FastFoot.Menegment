@@ -21,6 +21,11 @@
                         <h3 class="th-menu_title">
                             <a href="shop-details.html">@item.Name</a>
                         </h3>
+                        <div class="content">
+                            <h5 class="title">
+                                <a asp-controller="RestaurantDetails" asp-action="Index" asp-route-id="@item.RestaurantsId">@item.Restaurants.Name</a>
+                            </h5>
+                        </div>
                         <p class="th-menu_desc">@item.Description</p>
                         <span class="th-menu_price">$19.85</span>
                     </div>
@@ -29,11 +34,7 @@
                     </div>
                 </div>
             </a>
-                <div class="content">
-                    <h5 class="title">
-                        <a asp-controller="RestaurantDetails" asp-action="Index" asp-route-restaurantId="@item.RestaurantsId">@item.Restaurants.Name</a>
-                    </h5>
-                </div>
+       
                     
         </div>
     }

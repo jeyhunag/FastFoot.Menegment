@@ -11,16 +11,12 @@ namespace FastFoot.Web.UI.Controllers
         {
             this.db = db;
         }
-        public IActionResult Index( int Id)
+        public IActionResult Index( int id)
         {
 
-            var model = db.foods
-               .Include(p => p.Restaurants).ToList();
+            var model = db.restaurants
+               .Include(p => p.foods).Include(p=>p.RestaurantsImages).Include(p => p.Cities).FirstOrDefault(p => p.Id == id);
 
-            if (Id > 0)
-            {
-                model = model.Where(p => p.RestaurantsId == Id).ToList();
-            }
             return View(model);
         }
     }

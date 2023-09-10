@@ -1,4 +1,5 @@
-﻿@inject UserManager<AppUser> UserManager
+﻿@model HeaderViewModel
+@inject UserManager<AppUser> UserManager
 @inject RoleManager<AppRole> RoleManager
 
 <div class="preloader">
@@ -214,12 +215,12 @@
                 <div class="col-auto d-none d-lg-block">
                     <div class="header-links">
                         <ul>
+                     
                             <li>
-                                <i class="far fa-envelope"></i><a>needhelp.pizzan@gmail.com</a>
+                                <i class="far fa-envelope"></i><a>@Model.Site.Email</a>
                             </li>
                             <li>
-                                <i class="far fa-location-dot"></i>Rd. Allentown, New Mexico
-                                31134
+                                <i class="far fa-location-dot"></i>@Model.Site.Address
                             </li>
                         </ul>
                     </div>
@@ -227,22 +228,22 @@
                 <div class="col-auto">
                     <div class="header-links">
                         <ul>
-                     
+
                             @if (User.Identity.IsAuthenticated)
                             {
 
-                                    <li>
-                                        <i class="far fa-user"></i>
-                                        <a asp-controller="Account" asp-action="ProfileSettings" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
-                                            Profile Settings 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-user"></i>
-                                        <a asp-controller="Account" asp-action="Logout">
-                                            Log Out
-                                        </a>
-                                    </li>
+                                <li>
+                                    <i class="far fa-user"></i>
+                                    <a asp-controller="Account" asp-action="ProfileSettings" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+                                        Profile Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <i class="far fa-user"></i>
+                                    <a asp-controller="Account" asp-action="Logout">
+                                        Log Out
+                                    </a>
+                                </li>
                             }
                             else
                             {
@@ -261,18 +262,13 @@
                             }
                             <li>
                                 <div class="header-social">
-                                    <a href="https://www.facebook.com/">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="https://www.twitter.com/">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                    <a href="https://www.linkedin.com/">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="https://www.instagram.com/">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
+                                    @foreach (var item in Model.socialLinks)
+                                    {
+                                        <a href="@item.Link">
+                                            @Html.Raw(item.Icon)
+                                        </a>
+                                    }
+
                                 </div>
                             </li>
                         </ul>
@@ -288,7 +284,7 @@
                     <div class="col-auto">
                         <div class="header-logo">
                             <a href="index.html">
-                                <img src="~/asset/img/logo.svg" alt="Pizzan" />
+                                <img src="/@Model.Site.Logo" alt="Pizzan" />
                             </a>
                         </div>
                     </div>

@@ -23,6 +23,7 @@ namespace FastFoot.Web.UI.ViewComponents
             vm.Name = user.Name;
             vm.Surname = user.Surname;
             vm.Name = user.Name;
+            vm.UserName = user.UserName;
             vm.Email = user.Email;
             vm.Img = user.Img;
             vm.DateOfBirth = user.DateOfBirth;

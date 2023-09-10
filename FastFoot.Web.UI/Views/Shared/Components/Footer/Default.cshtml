@@ -1,4 +1,6 @@
-﻿<footer class="footer-wrapper footer-layout5"
+﻿@model HeaderViewModel
+
+<footer class="footer-wrapper footer-layout5"
         data-bg-src="~/asset/img/update_2/bg/footer_bg_6.jpg">
     <div class="widget-area">
         <div class="container">
@@ -13,18 +15,14 @@
                                 user-centric architectures.
                             </p>
                             <div class="th-social">
-                                <a href="https://www.facebook.com/">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="https://www.twitter.com/">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="https://www.linkedin.com/">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="https://www.whatsapp.com/">
-                                    <i class="fab fa-whatsapp"></i>
-                                </a>
+
+                                    @foreach (var item2 in Model.socialLinks)
+                                    {
+                                        <a href="@item2.Link">
+                                            @Html.Raw(item2.Icon)
+                                        </a>
+                                    }
+                              
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
-﻿@model UserCourierViewModel
+﻿@model ProfileViewModel
 
-@* <section class="booking-sec1 space"
+<section class="booking-sec1 space"
          id="bookingSec1"
          data-bg-src="/asset/img/update_2/bg/booking_bg_2.png">
     <div class="container">
@@ -10,61 +10,63 @@
                     <span class="sub-title">Booking Table</span>
                     <h2 class="sec-title text-white">Make a Reservation</h2>
                 </div>
-                <form method="post" asp-action="ProfileSettings" class="booking-form3" enctype="multipart/form-data">
+                <form asp-action="ProfileSettings" method="post" class="booking-form3" enctype="multipart/form-data">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <input type="date"
                                    class="form-control rounded-2 date-pick"
-                                   asp-for="@Model.Profile.DateOfBirth"
-                                   name="DateOfBirth`"
-                                   placeholder="Select Date" />
+                                   asp-for="@Model.DateOfBirth"
+                                   name="DateOfBirth" />
+
                             <i class="far fa-calendar-days"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Name" name="Name" placeholder="Name" />
+                            <input class="form-control rounded-2" asp-for="@Model.Name" name="Name" placeholder="Name" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Surname" name="Surname" placeholder="Surname" />
+                            <input class="form-control rounded-2" asp-for="@Model.Surname" name="Surname" placeholder="Surname" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.UserName" name="UserName" placeholder="UserName" />
+                            <input class="form-control rounded-2" asp-for="@Model.UserName" name="UserName" placeholder="UserName" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Fincode" name="Fincode" placeholder="Fin Code" />
+                            <input class="form-control rounded-2" asp-for="@Model.Fincode" name="Fincode" placeholder="Fin Code" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input type="number" class="form-control rounded-2" asp-for="@Model.Profile.WhatsappNumber" name="WhatsappNumber" placeholder="Whatsapp Number" />
+                            <input type="number" class="form-control rounded-2" asp-for="@Model.WhatsappNumber" name="WhatsappNumber" placeholder="Whatsapp Number" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" type="email" asp-for="@Model.Profile.Email" name="Email" placeholder="Email" />
+                            <input class="form-control rounded-2" type="email" asp-for="@Model.Email" name="Email" placeholder="Email" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Fincode" name="Fincode" placeholder="Fin Code" />
+                            <input class="form-control rounded-2" asp-for="@Model.Gender" name="Gender" placeholder="Gender" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Gender" name="Gender" placeholder="Gender" />
+                            <input class="form-control rounded-2" asp-for="@Model.Country" name="Country" placeholder="Country" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input class="form-control rounded-2" asp-for="@Model.Profile.Country" name="Country" placeholder="Country" />
+                            <input type="hidden" asp-for="@Model.AppUser.Img" value="@Model.Img" />
+                            <input class="form-control rounded-2" type="file" asp-for="@Model.Img" name="imageFile" placeholder="Image" />
+                            <i class="far fa-user-group"></i>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <input class="form-control rounded-2" type="password" asp-for="@Model.NewPassword" name="NewPassword" placeholder="New Password" />
                             <i class="far fa-user-group"></i>
                         </div>
                         <div class="form-group col-6">
-                            <input type="hidden" asp-for="@Model.AppUser.Img" value="@Model.Profile.Img" />
-                            <input class="form-control rounded-2" type="file" asp-for="@Model.Profile.Img" name="imageFile" placeholder="Image" />
+                            <input class="form-control rounded-2" type="password" asp-for="@Model.Password" name="Password" placeholder="Password" />
                             <i class="far fa-user-group"></i>
                         </div>
-                        <div class="form-group col-6">
-                            <input class="form-control rounded-2" type="password" asp-for="@Model.Profile.NewPassword" name="NewPassword" placeholder="New Password" />
-                            <i class="far fa-user-group"></i>
-                        </div>
+
                         <div class="form-btn col-12 text-center text-xl-start">
                             <button class="th-btn style3 rounded-2">
                                 Update<i class="fa-solid fa-arrow-right ms-2"></i>
@@ -76,4 +78,4 @@
             </div>
         </div>
     </div>
-</section> *@
+</section>
